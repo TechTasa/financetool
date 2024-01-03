@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Apply for a <%= type %> Loan</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/apply.css">
+   
+</head>
+<body>
+    <nav class="navbar">
+        <div id="menu"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="44"
+                height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#1b1dc7" fill="none" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <line x1="4" y1="6" x2="20" y2="6" />
+                <line x1="4" y1="12" x2="20" y2="12" />
+                <line x1="4" y1="18" x2="20" y2="18" />
+            </svg></div>
+        <a href="/" class="logo">
+          <img src="/images/XpertRupees_Logo.svg" alt=""></a>
+            <ul class="links">
+                <li class=" link active"><a href="/">Home</a></li>
+                <li class=" link"><a href="/services">Services</a></li>
+                <li class=" link"><a href="/career">Career</a></li>
+                <li class=" link"><a href="/blog">Blog</a></li>
+                <li class=" link"><a href="/contact">Contact</a></li>
+            </ul>
+          
+            <% if (loggedin) { %>
+              <button class="cta" onClick='location="/dashboard"'>Dashboard</button>
+          <% } else { %>
+              <button class="cta" onClick='location="/auth/login"'>Sign In</button>
+          <% } %>
+            
+    </nav>
+    <div class="container">
+        <div class="title">Apply for a <%= type %></div>
+        <form action="/loan/apply/<%= type %>" method="post">
+          <div class="user__details">
+            <div class="input__box">
+              <span class="details">Full Name</span>
+              <input type="text" id="name" name="name" placeholder="E.g: John Smith" required>
+            </div>
+            <div class="input__box">
+              <span class="details">Email</span>
+              <input type="email" id="email" name="email" placeholder="johnsmith@hotmail.com" required>
+            </div>
+            <div class="input__box">
+              <span class="details">Phone Number</span>
+              <input type="tel" id="number" name="number" placeholder="012-345-6789" required>
+            </div>
+            <div class="input__box">
+                <span class="details">Salary</span>
+                <input type="text" id="salary" name="salary" placeholder="50000" required>
+              </div>
+              <div class="input__box">
+                <span class="details">Address</span>
+                <input type="text" id="address" name="address" placeholder="Mountain View, California, United States" required>
+              </div>
+              <div class="input__box">
+                <span class="details">Best Time To Reach You</span>
+                <input type="time" id="timeToReach" name="timeToReach" placeholder="10 AM" required>
+              </div>
+              <div class="input__box">
+                <span class="details">Preferred Contact Method</span>
+                <select id="reachBy" name="reachBy">
+                    <option value="phone">Phone</option>
+                    <option value="email">Email</option>
+                </select>
+              </div>
+          </div>
+
+          <div class="button">
+            <input type="submit" value="Submit">
+          </div>
+        </form>
+    </div>
+</body>
+<script src="/js/script.js"></script>
+</html>

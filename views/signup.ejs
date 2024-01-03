@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sign Up</title>
+  <link rel="stylesheet" type="text/css" href="/css/signup.css">
+</head>
+<body>
+  <h1>Sign Up</h1>
+  <form action="/auth/signup" method="POST">
+    <input type="text" name="username" placeholder="Username" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <select name="userType" required>
+      <option value="">Select user type</option>
+      <option value="admin">Admin</option>
+      <option value="agent">Agent</option>
+      <option value="hr">HR</option>
+    </select>
+    <button type="submit">Sign Up</button>
+  </form>
+</body>
+</html>
