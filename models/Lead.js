@@ -30,11 +30,53 @@ const LeadSchema = new mongoose.Schema({
     enum: ['email', 'phone'],
     required: [true, 'Please provide how we can reach you']
   },
+  companyName: {
+    type: String,
+  },
   leadType: {
     type: String,
     enum: ['creditcard', 'personalloan', 'microloan', 'businessloan', 'homeloan','insurance'],
     required: [true, 'Please provide type of lead']
+  },
+  documents: {
+    type: Object,
   }
+  //  // Personal Loan fields
+  //  pancard: {
+  //   type: String,
+  // },
+  // aadharcard: {
+  //   type: String,
+  // },
+  // salaryslip: {
+  //   type: String,
+  // },
+  // companyid: {
+  //   type: String,
+  // },
+  // passportSizePhoto: {
+  //   type: String,
+  // },
+  // offerLetter: {
+  //   type: String,
+  // },
+  // bankStatement: {
+  //   type: String,
+  // },
+
+  // // Business Loan fields
+  // companyPancard: {
+  //   type: String,
+  // },
+  // companyBankStatement: {
+  //   type: String,
+  // },
+  // ITR: {
+  //   type: String,
+  // },
+  // companyAddressProof: {
+  //   type: String,
+  // }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Lead', LeadSchema);

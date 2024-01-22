@@ -778,6 +778,11 @@
   padding: 2rem;
   display: inline-block;
 }
+@media only screen and (max-width: 600px) {
+  .services-box{
+    width: 100%;
+  }
+}
 .services-box h3{
   color: #272ad2;
   font-size: 1.3rem;

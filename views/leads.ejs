@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Leads</title>
 </head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
 <style>
   /* Webpixels CSS */
   /* Utility and component-centric Design System based on Bootstrap for fast, responsive UI development */
@@ -21,7 +26,7 @@
     <!-- Vertical Navbar -->
     <nav class="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg"
       id="navbarVertical">
-      <div class="container-fluid">
+      <div class="container-fluid" style="padding-left: 1rem !important;">
         <!-- Toggler -->
         <button class="navbar-toggler ms-n2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse"
           aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -29,7 +34,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="/">
-          <img src="https://rupeexpert.com/Svg-XpertRupees/XpertRupees_Logo.svg" alt="...">
+          <img src="/uploads/XpertRupees_Logo.svg" alt="...">
         </a>
 
         <!-- Collapse -->
@@ -153,7 +158,7 @@
                   <th scope="col">Reach By</th>
                   <th scope="col">Lead Type</th>
                   <th scope="col">Date/Time</th>
-
+                  <th scope="col">Documents</th>
                 </tr>
               </thead>
               <tbody>
@@ -187,6 +192,49 @@
                     </td>
                     <td>
                       <%= lead.createdAt%>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#documentsModal<%= lead._id %>">
+                        View Documents
+                      </button>
+            
+                      <!-- Modal -->
+                      <div class="modal fade" id="documentsModal<%= lead._id %>" tabindex="-1" role="dialog" aria-labelledby="documentsModalLabel<%= lead._id %>" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="documentsModalLabel<%= lead._id %>">Documents for <%= lead.name %></h5>
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <!-- Display the documents here. You might need to adjust this part based on how you're storing and retrieving the documents. -->
+                              <% for (let doc in lead.documents) { %>
+                                <% if (lead.documents[doc]) { %>
+                                  <h5><%= doc.charAt(0).toUpperCase() + doc.slice(1) %>:</h5>
+                                  <% let extension = lead.documents[doc].split('.').pop(); %>
+                                  <% if (extension === 'pdf') { %>
+                                
+                                    <iframe src="../<%= lead.documents[doc] %>" width="100%" height="300px"></iframe>
+                                 
+                                  <% } else { %>
+                                    <a href="../<%= lead.documents[doc] %>" target="_blank">
+                                      <img src="../<%= lead.documents[doc] %>" width="100%">
+                                    </a>
+                                  <% } %>
+                                <% } %>
+                              <% } %>
+                            </div>
+                            
+                            
+                            
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </td>
                   </tr>
                   <% }); %>

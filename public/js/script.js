@@ -19,15 +19,7 @@ if (cal){
     });
 }
 
-$(document).ready(function () {
 
-
-    $(".career-job-card").click(function () {
-        window.open("Jobpost.php", "_self");
-    });
-
-
-});
 
 let imgs = document.querySelectorAll(".banner-wrapper img");
 let banner = document.querySelector(".banner-wrapper");

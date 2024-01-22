@@ -17,7 +17,6 @@ exports.getLeads = async (req, res) => {
       }else{
         leads = await Lead.find({ leadType: { $in: leadAccess } });
       }
-      
       res.render('leads', { leads: leads,userType });
     } catch (err) {
       res.status(400).json({
