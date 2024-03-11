@@ -598,15 +598,18 @@
 
 .contact-page img {
   border-radius: 30px;
-  filter: sepia(0.7);
-  width: 90%;
+  width: 60%;
 }
 
 .contact-box {
   display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 3rem;
   gap: 2rem;
-  position: absolute;
-  bottom: -100px;
+  position: relative;
+  bottom: 90px;
 }
 
 .box-cards {
@@ -614,27 +617,34 @@
   box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.212);
   width: 18rem;
   height: 15rem;
-  border-radius: 20px;
-  background: linear-gradient(to left, #4b27e1,paleturquoise);
+  background: linear-gradient(to left, #0561CA,#00278C);
 }
 
 .box-cards h1 {
-  color: #1b1dc7;
+  color: white;
 }
-
+.box-cards i {
+  color: white;
+  margin-bottom: 20px;
+}
 .box-cards h2 {
-  color: rgb(217, 3, 104);
+  color:white;
   font-size: 18px;
   margin-bottom: 1rem;
 }
-
+.box-cards h2 a{
+  color:white;
+  text-decoration: none;
+}
+.box-cards p{
+  color:white;
+}
 .career {
   padding: 2rem;
 }
 
 .career-title {
   text-align: center;
-
   color: #043a7a;
   font-size: 2rem;
   margin-bottom: 2rem;
@@ -1051,7 +1061,7 @@
   }
 
   .contact-page img {
-    display: none;
+  width: 70%;
   }
 
   .contact-page h1 {
@@ -1065,8 +1075,8 @@
 
   .contact-box {
     position: static;
-    flex-direction: column;
-    margin-top: 10rem;
+    bottom: 0;
+    margin-top: 0rem;
   }
 
   .content-main {
