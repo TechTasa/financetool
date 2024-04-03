@@ -46,6 +46,7 @@
                   <h1 class="career-job-card-title"><%= job.title %></h1>
                   <p class="career-job-card-discription"><%= job.location %></p>
                   <div class="career-job-card-info"><%= job.description %></div>
+                  <a href="<%= job.document %>" target="_blank">file</a>
                   <a style="text-decoration: none; color: #fff;" href="/career/apply/<%= job._id %>">Apply</a>
                 </div>
               <% }); %>

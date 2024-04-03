@@ -162,15 +162,18 @@
             <!-- <div class="table-responsive">
               
             </div> -->
-            <form action="/dashboard/jobs/edit/<%= job._id %>" method="POST">
-                <label for="title">Title:</label>
-                <input type="text" id="title" name="title" value="<%= job.title %>">
-                <label for="location">Location:</label>
-                <input type="text" id="location" name="location" value="<%= job.location %>">
-                <label for="description">Description:</label>
-                <input type="text" id="description" name="description" value="<%= job.description %>">
-                <input type="submit" value="Submit">
-              </form>
+            <form action="/dashboard/jobs/edit/<%= job._id %>" method="POST" enctype="multipart/form-data">
+              <label for="title">Title:</label>
+              <input type="text" id="title" name="title" value="<%= job.title %>">
+              <label for="location">Location:</label>
+              <input type="text" id="location" name="location" value="<%= job.location %>">
+              <label for="description">Description:</label>
+              <input type="text" id="description" name="description" value="<%= job.description %>">
+              <iframe src="/<%=job.document%>" frameborder="0" width="100%" height="400px"></iframe>
+              <input type="file" id="document" name="document" >
+              <label for="document">New File:*Only PDF Supported</label>
+              <input type="submit" value="Submit">
+            </form>
           </div>
       </main>
   </div>
