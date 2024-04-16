@@ -69,7 +69,19 @@ npm start
 
 ## By default it will run on http://localhost:612
 
+## Making Changes & Pushing to github
 
+```
+git add .
+```
+```
+git commit -m "changed this & that"  
+```
+Change "changed this & that" with the changes you made.For e.g you changed services page : "changed service page"
+
+```
+git push
+```
 
     
 ## File/Folder Structure
