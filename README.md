@@ -5,11 +5,11 @@
 
 # Git Setup (First time only)
 ```
-git config --global user.name John Doe
+git config --global user.name TechTasa
 ```
 ```
 
-git config --global user.email johndoe@example.com
+git config --global user.email teschtasa@gmail.com
 ```
 # Installation
  Open Terminal In VSCODE:
