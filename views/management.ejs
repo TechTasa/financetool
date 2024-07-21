@@ -28,7 +28,7 @@
             </button>
             <!-- Brand -->
             <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="/">
-                <img src="/uploads/XpertRupees_Logo.svg" alt="...">
+                <img src="/images/XpertRupees_Logo.svg" alt="...">
             </a>
 
             <!-- Collapse -->
@@ -47,11 +47,13 @@
                         </a>
                     </li>
                 <% } %>
+                <% if (userType === 'admin' || userType === 'agent') { %>
                   <li class="nav-item">
                     <a class="nav-link" href="/dashboard/leads">
                       <i class="bi bi-bar-chart"></i> Leads
                     </a>
                   </li>
+                  <% } %>
                   <% if (userType === 'admin' || userType === 'hr') { %>
                     <li class="nav-item">
                         <a class="nav-link" href="/dashboard/jobs">
@@ -62,7 +64,7 @@
                 <% if (userType === 'admin' || userType === 'hr') { %>
                   <li class="nav-item">
                       <a class="nav-link" href="/dashboard/resume">
-                          <i class="bi bi-card-list"></i> Resumes
+                           <i class="bi bi-file-person"></i> Resumes
                       </a>
                   </li>
               <% } %>

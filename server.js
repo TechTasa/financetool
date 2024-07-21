@@ -19,6 +19,7 @@ const blogPageRoutes = require('./routes/blogPageRoutes');
 
 const { connect} = require('./config/db');
 const bodyParser = require('body-parser');
+const { log } = require('console');
 
 require('dotenv').config();
 
@@ -51,7 +52,6 @@ const store = new MongoDBStore({
     store: store
   }));
   
-
   app.use('/auth', authRoutes);
   app.use('/loan', leadRoutes);
   app.use('/dashboard', dashboardRoutes);

@@ -5,21 +5,21 @@
 
 # Git Setup (First time only)
 ```
-git config --global user.name TechTasa
+git config --global user.name John Doe
 ```
 ```
 
-git config --global user.email teschtasa@gmail.com
+git config --global user.email johndoe@example.com
 ```
 # Installation
  Open Terminal In VSCODE:
 
 ```
-git clone https://github.com/TechTasa/financetool.git
+git clone https://github.com/TechTasa/rupeexpertNode.git
 ```
 
 ```
-cd financetool
+cd rupeexpertNode
 ```
 ## Select Branch
 
@@ -67,7 +67,8 @@ npm start
 ```
 
 
-## By default it will run on http://localhost:612
+## By default it will run on http://localhost:611
+
 
 ## Making Changes & Pushing to github
 
@@ -82,12 +83,11 @@ Change "changed this & that" with the changes you made.For e.g you changed servi
 ```
 git push
 ```
-
     
 ## File/Folder Structure
 
 ```
-└── 📁Finace Tool
+└── 📁rupeexpertNode
     └── 📁config
     └── 📁controllers
     └── 📁middlewares
@@ -135,3 +135,5 @@ git push
         └── services.ejs                 Services Page
         └── signup.ejs
 ```
+
+

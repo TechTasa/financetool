@@ -39,7 +39,7 @@
           <!-- Brand -->
           <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="/">
             <img
-              src="/uploads/XpertRupees_Logo.svg"
+              src="/images/XpertRupees_Logo.svg"
               alt="..."
             />
           </a>
@@ -74,7 +74,7 @@
               <% } %> <% if (userType === 'admin' || userType === 'hr') { %>
               <li class="nav-item">
                 <a class="nav-link" href="/dashboard/resume">
-                  <i class="bi bi-card-list"></i> Resumes
+                   <i class="bi bi-file-person"></i> Resumes
                 </a>
               </li>
               <% } %>
@@ -148,7 +148,9 @@
               <p>Name: <%= resume.name %></p>
               <p>Email: <%= resume.email %></p>
               <p>Phone: <%= resume.phone %></p>
-              <p>Job: <%= resume.job.title %></p>
+              <% if (resume.job.title) { %>
+                <p>Job: <%= resume.job.title %></p>
+              <% } %>
               <p>Date of Application: <%= resume.createdAt %></p>
               <iframe
                 src="/<%= resume.document %>"

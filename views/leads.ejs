@@ -19,6 +19,11 @@
 
   /* Bootstrap Icons */
   @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
+  @media (max-width: 980px) {
+  .container-fluid {
+    padding-left: 1rem !important;
+  }
+}
 </style>
 
 <body>
@@ -26,7 +31,7 @@
     <!-- Vertical Navbar -->
     <nav class="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg"
       id="navbarVertical">
-      <div class="container-fluid" style="padding-left: 1rem !important;">
+      <div class="container-fluid">
         <!-- Toggler -->
         <button class="navbar-toggler ms-n2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse"
           aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -34,7 +39,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="/">
-          <img src="/uploads/XpertRupees_Logo.svg" alt="...">
+          <img src="/images/XpertRupees_Logo.svg" alt="...">
         </a>
 
         <!-- Collapse -->
@@ -53,11 +58,13 @@
                 </a>
               </li>
               <% } %>
-                <li class="nav-item">
-                  <a class="nav-link" href="/dashboard/leads">
-                    <i class="bi bi-bar-chart"></i> Leads
-                  </a>
-                </li>
+                <% if (userType === 'admin' || userType === 'agent') { %>
+                  <li class="nav-item">
+                    <a class="nav-link" href="/dashboard/leads">
+                      <i class="bi bi-bar-chart"></i> Leads
+                    </a>
+                  </li>
+                  <% } %>
                 <% if (userType==='admin' || userType==='hr' ) { %>
                   <li class="nav-item">
                     <a class="nav-link" href="/dashboard/jobs">
@@ -68,7 +75,7 @@
                     <% if (userType==='admin' || userType==='hr' ) { %>
                       <li class="nav-item">
                         <a class="nav-link" href="/dashboard/resume">
-                          <i class="bi bi-card-list"></i> Resumes
+                           <i class="bi bi-file-person"></i> Resumes
                         </a>
                       </li>
                       <% } %>
