@@ -143,192 +143,326 @@
             </div>
             <!-- Nav -->
             <ul class="nav nav-tabs mt-4 overflow-x border-0">
-              <!-- <li class="nav-item ">
-                          <a href="#" class="nav-link active">All files</a>
+              <li class="nav-item ">
+                          <a href="#" id="cardbtn" class="nav-link active ">Cards</a>
                       </li>
                       <li class="nav-item">
-                          <a href="#" class="nav-link font-regular">Shared</a>
+                          <a href="#" id="tablebtn" class="nav-link  ">Table</a>
                       </li>
-                      <li class="nav-item">
-                          <a href="#" class="nav-link font-regular">File requests</a>
-                      </li> -->
             </ul>
           </div>
         </div>
       </header>
-      <!-- Main -->
+      <!-- Main  -->
       <main class="py-6 bg-surface-secondary">
-        <div class="container-fluid">
-          <div class="table-responsive">
-            <table class="table table-hover table-nowrap">
-              <thead class="thead-light">
-                <tr>
-                  <th scope="col">Name</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Number</th>
-                  <th scope="col">Salary</th>
-                  <th scope="col">Address</th>
-                  <th scope="col">Time to Reach</th>
-                  <th scope="col">Reach By</th>
-                  <th scope="col">Lead Type</th>
-                  <th scope="col">Date/Time</th>
-                  <th scope="col">Assigned To</th>
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% leads.forEach(function(lead) { %>
-                  <tr>
-                    <td><span class="text-heading font-semibold">
-                        <%= lead.name %>
-                      </span></td>
-                    <td>
-                      <%= lead.email %>
-                    </td>
-                    <td>
-                      <%= lead.number %>
-                    </td>
-                    <td>
-                      <%= lead.salary %>
-                    </td>
-                    <td>
-                      <%= lead.address %>
-                    </td>
-                    <td>
-                      <%= lead.timeToReach %>
-                    </td>
-                    <td>
-                      <%= lead.reachBy %>
-                    </td>
-                    <td>
-                      <%= lead.leadType %>
-                    </td>
-                    <td>
-                      <%= lead.createdAt %>
-                    </td>
-                    <td>
-                      <% if (lead.assignedTo) { %>
-                        <%= lead.assignedTo.username %>
-                          <% } else { %>
-                            Not Assigned
-                            <% } %>
-                    </td>
-                    <td>
-                      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                        data-target="#documentsModal<%= lead._id %>">
-                        View Documents
-                      </button>
-                      <% if (userType==='admin' ) { %>
-                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                          data-target="#assignModal<%= lead._id %>">
-                          Assign Lead
-                        </button>
-                        <% } %>
-
-                          <!-- Documents Modal -->
-                          <div class="modal fade" id="documentsModal<%= lead._id %>" tabindex="-1" role="dialog"
-                            aria-labelledby="documentsModalLabel<%= lead._id %>" aria-hidden="true">
-                            <!-- ... (keep your existing documents modal code) ... -->
+        <div class="container-fluid merabox">
+<div id="tableres">
 
 
-                            <div class="modal-dialog" role="document">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="documentsModalLabel<%= lead._id %>">Documents for <%=
-                                      lead.name %>
-                                  </h5>
-                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                  <!-- Display the documents here. You might need to adjust this part based on how you're storing and retrieving the documents. -->
-                                  <% for (let doc in lead.documents) { %>
-                                    <% if (lead.documents[doc]) { %>
-                                      <h5>
-                                        <%= doc.charAt(0).toUpperCase() + doc.slice(1) %>:
-                                      </h5>
-                                      <% let extension=lead.documents[doc].split('.').pop(); %>
-                                        <% if (extension==='pdf' ) { %>
-
-                                          <iframe src="../<%= lead.documents[doc] %>" width="100%"
-                                            height="300px"></iframe>
-
-                                          <% } else { %>
-                                            <a href="../<%= lead.documents[doc] %>" target="_blank">
-                                              <img src="../<%= lead.documents[doc] %>" width="100%">
-                                            </a>
-                                            <% } %>
-                                              <% } %>
-                                                <% } %>
-                                </div>
-
-
-
-                                <div class="modal-footer">
-                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </div>
-                              </div>
-
-                            </div>
-
-                          </div>
-
-                          <% if (userType==='admin' ) { %>
-                            <!-- Assignment Modal -->
-                            <div class="modal fade" id="assignModal<%= lead._id %>" tabindex="-1" role="dialog"
-                              aria-labelledby="assignModalLabel<%= lead._id %>" aria-hidden="true">
-                              <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                  <div class="modal-header">
-                                    <h5 class="modal-title" id="assignModalLabel<%= lead._id %>">Assign Lead: <%=
-                                        lead.name %>
-                                    </h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                      <span aria-hidden="true">&times;</span>
-                                    </button>
-                                  </div>
-                                  <div class="modal-body">
-                                    <form action="/dashboard/leads/assign-lead" method="POST">
-                                      <input type="hidden" name="leadId" value="<%= lead._id %>">
-                                      <div class="form-group">
-                                        <label for="assignType<%= lead._id %>">Assign To:</label>
-                                        <select name="assignType" id="assignType<%= lead._id %>" class="form-control p-2"
-                                          required>
-                                          <option value="">Select Type</option>
-                                          <option value="agent">Agent</option>
-                                          <option value="partner">Partner</option>
-                                          <option value="">No One</option> <!-- Add this option -->
-                                        </select>
-                                      </div>
-                                      <div class="form-group">
-                                        <label id="labelhide" for="assignedTo<%= lead._id %>">Select User:</label>
-                                        <select name="assignedTo" id="assignedTo<%= lead._id %>" class="form-control p-2"
-                                        required>
-                                          <option value="">Select User</option>
-                                        </select>
-                                      </div>
-                                      <button type="submit" class="btn btn-primary">Assign</button>
-                                    </form>
-                                    
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <% } %>
-                    </td>
-                  </tr>
-                  <% }); %>
-              </tbody>
-            </table>
-
-
+  <div id="meracard" class="row ">
+    <% leads.forEach(function(lead) { %>
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body flex-wrap">
+            <h5 class="card-title"><%= lead.name %></h5>
+            <p class="card-text p-2">Email: <%= lead.email %></p>
+            <p class="card-text p-2">Number: <%= lead.number %></p>
+            <p class="card-text p-2">Salary: <%= lead.salary %></p>
+            <p class="card-text p-2">Address: <%= lead.address %></p>
+            <p class="card-text p-2">Time to Reach: <%= lead.timeToReach %></p>
+            <p class="card-text p-2">Reach By: <%= lead.reachBy %></p>
+            <p class="card-text p-2">Lead Type: <%= lead.leadType %></p>
+            <p class="card-text p-2">Date/Time: <%= lead.createdAt %></p>
+            <p class="text-danger p-2 ">Assigned To: 
+              <% if (lead.assignedTo) { %>
+                <%= lead.assignedTo.username %>
+              <% } else { %>
+                Not Assigned
+              <% } %>
+            </p>
+            <div class="d-flex justify-content-between flex-wrap">
+              <button type="button" class="btn btn-primary btn-sm mb-2" data-toggle="modal"
+                data-target="#documentsModal<%= lead._id %>">
+                View Documents
+              </button>
+              <% if (userType==='admin' ) { %>
+                <button type="button" class="btn btn-success btn-sm mb-2" data-toggle="modal"
+                  data-target="#assignModal<%= lead._id %>">
+                  Assign Lead
+                </button>
+              <% } %>
+            </div>
           </div>
+        </div>
+  
+        <!-- Documents Modal -->
+        <div class="modal fade" id="documentsModal<%= lead._id %>" tabindex="-1" role="dialog"
+          aria-labelledby="documentsModalLabel<%= lead._id %>" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="documentsModalLabel<%= lead._id %>">Documents for <%= lead.name %>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <!-- Display the documents here. You might need to adjust this part based on how you're storing and retrieving the documents. -->
+                <% for (let doc in lead.documents) { %>
+                  <% if (lead.documents[doc]) { %>
+                    <h5>
+                      <%= doc.charAt(0).toUpperCase() + doc.slice(1) %>:
+                    </h5>
+                    <% let extension=lead.documents[doc].split('.').pop(); %>
+                    <% if (extension==='pdf' ) { %>
+                      <iframe src="../<%= lead.documents[doc] %>" width="100%" height="300px"></iframe>
+                    <% } else { %>
+                      <a href="../<%= lead.documents[doc] %>" target="_blank">
+                        <img src="../<%= lead.documents[doc] %>" width="100%">
+                      </a>
+                    <% } %>
+                  <% } %>
+                <% } %>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Assignment Modal -->
+        <% if (userType==='admin' ) { %>
+          <div class="modal fade" id="assignModal<%= lead._id %>" tabindex="-1" role="dialog"
+            aria-labelledby="assignModalLabel<%= lead._id %>" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="assignModalLabel<%= lead._id %>">Assign Lead: <%= lead.name %>
+                  </h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="/dashboard/leads/assign-lead" method="POST">
+                    <input type="hidden" name="leadId" value="<%= lead._id %>">
+                    <div class="form-group">
+                      <label for="assignType<%= lead._id %>">Assign To:</label>
+                      <select name="assignType" id="assignType<%= lead._id %>" class="form-control p-2" required>
+                        <option value="">Select Type</option>
+                        <option value="agent">Agent</option>
+                        <option value="partner">Partner</option>
+                        <option value="">No One</option> <!-- Add this option -->
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label id="labelhide" for="assignedTo<%= lead._id %>">Select User:</label>
+                      <select name="assignedTo" id="assignedTo<%= lead._id %>" class="form-control p-2" required>
+                        <option value="">Select User</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Assign</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% } %>
+      </div>
+    <% }); %>
+  </div>
+
+
+  <table style="display: none;" id="meratable" class="table table-hover table-nowrap">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Number</th>
+        <th scope="col">Salary</th>
+        <th scope="col">Address</th>
+        <th scope="col">Time to Reach</th>
+        <th scope="col">Reach By</th>
+        <th scope="col">Lead Type</th>
+        <th scope="col">Date/Time</th>
+        <th scope="col">Assigned To</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% leads.forEach(function(lead) { %>
+        <tr>
+          <td><span class="text-heading font-semibold">
+              <%= lead.name %>
+            </span></td>
+          <td>
+            <%= lead.email %>
+          </td>
+          <td>
+            <%= lead.number %>
+          </td>
+          <td>
+            <%= lead.salary %>
+          </td>
+          <td>
+            <%= lead.address %>
+          </td>
+          <td>
+            <%= lead.timeToReach %>
+          </td>
+          <td>
+            <%= lead.reachBy %>
+          </td>
+          <td>
+            <%= lead.leadType %>
+          </td>
+          <td>
+            <%= lead.createdAt %>
+          </td>
+          <td>
+            <% if (lead.assignedTo) { %>
+              <%= lead.assignedTo.username %>
+                <% } else { %>
+                  Not Assigned
+                  <% } %>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+              data-target="#documentsModal<%= lead._id %>">
+              View Documents
+            </button>
+            <% if (userType==='admin' ) { %>
+              <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                data-target="#assignModal<%= lead._id %>">
+                Assign Lead
+              </button>
+              <% } %>
+
+                <!-- Documents Modal -->
+                <div class="modal fade" id="documentsModal<%= lead._id %>" tabindex="-1" role="dialog"
+                  aria-labelledby="documentsModalLabel<%= lead._id %>" aria-hidden="true">
+                  <!-- ... (keep your existing documents modal code) ... -->
+
+
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="documentsModalLabel<%= lead._id %>">Documents for <%=
+                            lead.name %>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <!-- Display the documents here. You might need to adjust this part based on how you're storing and retrieving the documents. -->
+                        <% for (let doc in lead.documents) { %>
+                          <% if (lead.documents[doc]) { %>
+                            <h5>
+                              <%= doc.charAt(0).toUpperCase() + doc.slice(1) %>:
+                            </h5>
+                            <% let extension=lead.documents[doc].split('.').pop(); %>
+                              <% if (extension==='pdf' ) { %>
+
+                                <iframe src="../<%= lead.documents[doc] %>" width="100%"
+                                  height="300px"></iframe>
+
+                                <% } else { %>
+                                  <a href="../<%= lead.documents[doc] %>" target="_blank">
+                                    <img src="../<%= lead.documents[doc] %>" width="100%">
+                                  </a>
+                                  <% } %>
+                                    <% } %>
+                                      <% } %>
+                      </div>
+
+
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <% if (userType==='admin' ) { %>
+                  <!-- Assignment Modal -->
+                  <div class="modal fade" id="assignModal<%= lead._id %>" tabindex="-1" role="dialog"
+                    aria-labelledby="assignModalLabel<%= lead._id %>" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title" id="assignModalLabel<%= lead._id %>">Assign Lead: <%=
+                              lead.name %>
+                          </h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="/dashboard/leads/assign-lead" method="POST">
+                            <input type="hidden" name="leadId" value="<%= lead._id %>">
+                            <div class="form-group">
+                              <label for="assignType<%= lead._id %>">Assign To:</label>
+                              <select name="assignType" id="assignType<%= lead._id %>" class="form-control p-2"
+                                required>
+                                <option value="">Select Type</option>
+                                <option value="agent">Agent</option>
+                                <option value="partner">Partner</option>
+                                <option value="">No One</option> <!-- Add this option -->
+                              </select>
+                            </div>
+                            <div class="form-group">
+                              <label id="labelhide" for="assignedTo<%= lead._id %>">Select User:</label>
+                              <select name="assignedTo" id="assignedTo<%= lead._id %>" class="form-control p-2"
+                              required>
+                                <option value="">Select User</option>
+                              </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Assign</button>
+                          </form>
+                          
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <% } %>
+          </td>
+        </tr>
+        <% }); %>
+    </tbody>
+  </table>
+</div>
+           
+
+
         </div>
       </main>
     </div>
   </div>
- 
+ <script>
+document.getElementById("cardbtn").addEventListener("click",()=>{
+  event.preventDefault();
+  document.getElementById('meracard').style.display="flex";
+  document.getElementById('meratable').style.display="none";
+  document.getElementById('tableres').classList.remove("table-responsive")
+  document.getElementById("cardbtn").classList.add("active");
+  document.getElementById("tablebtn").classList.remove("active");
+})
+document.getElementById("tablebtn").addEventListener("click",()=>{
+  event.preventDefault();
+  document.getElementById('meracard').style.display="none";
+  document.getElementById('meratable').style.display="block";
+  document.getElementById('tableres').classList.add("table-responsive")
+  document.getElementById("cardbtn").classList.remove("active");
+  document.getElementById("tablebtn").classList.add("active");
+
+})
+ </script>
   <script>
    document.addEventListener('DOMContentLoaded', function () {
   const assignTypeSelects = document.querySelectorAll('select[name="assignType"]');
