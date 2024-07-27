@@ -183,6 +183,7 @@ button {
                 <% } %>
                 <option value="agent">Agent</option>
                 <option value="blog writer">Blog Writer</option>
+                <option value="partner">Partner</option>
               </select>
               <label id="lb" for="leadAccess" style="display: none;">Lead Access</label>
               <div id="leadAccess"  style="display: none;">
@@ -196,8 +197,8 @@ button {
                 <label for="businessloan">Business Loan</label>
                 <input type="checkbox" id="homeloan" name="leadAccess" value="homeloan">
                 <label for="homeloan">Home Loan</label>
-                <input type="checkbox" id="insurance" name="leadAccess" value="insurance">
-                <label for="insurance">Insurance</label>
+                <!-- <input type="checkbox" id="insurance" name="leadAccess" value="insurance">
+                <label for="insurance">Insurance</label> -->
                 <!-- Add more checkboxes as needed -->
               </div>
               <button type="submit">Create User</button>
@@ -212,7 +213,8 @@ button {
 <script>
   function displayLeadAccess() {
   var userType = document.getElementById("userType").value;
-  if (userType === "agent") {
+ 
+  if (userType === "agent" || userType === "partner") {
     document.getElementById("leadAccess").style.display = "grid";
     document.getElementById("lb").style.display = "block";
   } else {

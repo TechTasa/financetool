@@ -67,16 +67,25 @@ exports.updateUser = async (req, res) => {
     return res.redirect('/auth/login');
   }
   try {
-    const user = await User.findByIdAndUpdate(req.params.userId, req.body, { new: true });
+    const user = await User.findById(req.params.userId);
     if (!user) {
       return res.status(404).send('User not found');
     }
+    // Check if leadAccess checkboxes are present in the request body
+    if (req.body.leadAccess) {
+      // If present, update the leadAccess array
+      user.leadAccess = req.body.leadAccess;
+    } else {
+      // If not present, reset the leadAccess array to empty
+      user.leadAccess = [];
+    }
+    // Update the user document
+    await user.save();
     res.redirect('/dashboard/management');
   } catch (err) {
     res.status(500).send(err.message);
   }
 };
-
 exports.deleteUser = async (req, res) => {
   // Check if user is logged in
   if (!req.session.user) {

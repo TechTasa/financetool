@@ -40,43 +40,11 @@ const LeadSchema = new mongoose.Schema({
   },
   documents: {
     type: Object,
-  }
-  //  // Personal Loan fields
-  //  pancard: {
-  //   type: String,
-  // },
-  // aadharcard: {
-  //   type: String,
-  // },
-  // salaryslip: {
-  //   type: String,
-  // },
-  // companyid: {
-  //   type: String,
-  // },
-  // passportSizePhoto: {
-  //   type: String,
-  // },
-  // offerLetter: {
-  //   type: String,
-  // },
-  // bankStatement: {
-  //   type: String,
-  // },
-
-  // // Business Loan fields
-  // companyPancard: {
-  //   type: String,
-  // },
-  // companyBankStatement: {
-  //   type: String,
-  // },
-  // ITR: {
-  //   type: String,
-  // },
-  // companyAddressProof: {
-  //   type: String,
-  // }
+  },
+  assignedTo: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Lead', LeadSchema);

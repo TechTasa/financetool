@@ -1,14 +1,19 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Leads</title>
 </head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
 <style>
   /* Webpixels CSS */
@@ -20,16 +25,18 @@
   /* Bootstrap Icons */
   @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
   @media (max-width: 980px) {
-  .container-fluid {
-    padding-left: 1rem !important;
+    .container-fluid {
+      padding-left: 1rem !important;
+    }
   }
-}
 </style>
 
 <body>
+
   <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
     <!-- Vertical Navbar -->
-    <nav class="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg"
+    <nav
+      class="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg"
       id="navbarVertical">
       <div class="container-fluid">
         <!-- Toggler -->
@@ -58,34 +65,34 @@
                 </a>
               </li>
               <% } %>
-                <% if (userType === 'admin' || userType === 'agent') { %>
+                <% if (userType==='admin' || userType==='agent' || userType==='partner') { %>
                   <li class="nav-item">
                     <a class="nav-link" href="/dashboard/leads">
                       <i class="bi bi-bar-chart"></i> Leads
                     </a>
                   </li>
                   <% } %>
-                <% if (userType==='admin' || userType==='hr' ) { %>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/dashboard/jobs">
-                      <i class="bi bi-card-list"></i> Jobs Listing
-                    </a>
-                  </li>
-                  <% } %>
                     <% if (userType==='admin' || userType==='hr' ) { %>
                       <li class="nav-item">
-                        <a class="nav-link" href="/dashboard/resume">
-                           <i class="bi bi-file-person"></i> Resumes
+                        <a class="nav-link" href="/dashboard/jobs">
+                          <i class="bi bi-card-list"></i> Jobs Listing
                         </a>
                       </li>
                       <% } %>
-                        <% if (userType==='admin' || userType==='blog writer' ) { %>
+                        <% if (userType==='admin' || userType==='hr' ) { %>
                           <li class="nav-item">
-                            <a class="nav-link" href="/dashboard/blog">
-                              <i class="bi bi-file-text"></i> Blog
+                            <a class="nav-link" href="/dashboard/resume">
+                              <i class="bi bi-file-person"></i> Resumes
                             </a>
                           </li>
                           <% } %>
+                            <% if (userType==='admin' || userType==='blog writer' ) { %>
+                              <li class="nav-item">
+                                <a class="nav-link" href="/dashboard/blog">
+                                  <i class="bi bi-file-text"></i> Blog
+                                </a>
+                              </li>
+                              <% } %>
           </ul>
           <!-- Divider -->
           <hr class="navbar-divider my-5 opacity-20">
@@ -165,17 +172,16 @@
                   <th scope="col">Reach By</th>
                   <th scope="col">Lead Type</th>
                   <th scope="col">Date/Time</th>
-                  <th scope="col">Documents</th>
+                  <th scope="col">Assigned To</th>
+                  <th scope="col">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 <% leads.forEach(function(lead) { %>
                   <tr>
-                    <td>
-                      <span class="text-heading font-semibold">
+                    <td><span class="text-heading font-semibold">
                         <%= lead.name %>
-                      </span>
-                    </td>
+                      </span></td>
                     <td>
                       <%= lead.email %>
                     </td>
@@ -198,60 +204,167 @@
                       <%= lead.leadType %>
                     </td>
                     <td>
-                      <%= lead.createdAt%>
+                      <%= lead.createdAt %>
                     </td>
                     <td>
-                      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#documentsModal<%= lead._id %>">
+                      <% if (lead.assignedTo) { %>
+                        <%= lead.assignedTo.username %>
+                          <% } else { %>
+                            Not Assigned
+                            <% } %>
+                    </td>
+                    <td>
+                      <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
+                        data-target="#documentsModal<%= lead._id %>">
                         View Documents
                       </button>
-            
-                      <!-- Modal -->
-                      <div class="modal fade" id="documentsModal<%= lead._id %>" tabindex="-1" role="dialog" aria-labelledby="documentsModalLabel<%= lead._id %>" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                          <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="documentsModalLabel<%= lead._id %>">Documents for <%= lead.name %></h5>
-                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                              </button>
+                      <% if (userType==='admin' ) { %>
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
+                          data-target="#assignModal<%= lead._id %>">
+                          Assign Lead
+                        </button>
+                        <% } %>
+
+                          <!-- Documents Modal -->
+                          <div class="modal fade" id="documentsModal<%= lead._id %>" tabindex="-1" role="dialog"
+                            aria-labelledby="documentsModalLabel<%= lead._id %>" aria-hidden="true">
+                            <!-- ... (keep your existing documents modal code) ... -->
+
+
+                            <div class="modal-dialog" role="document">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title" id="documentsModalLabel<%= lead._id %>">Documents for <%=
+                                      lead.name %>
+                                  </h5>
+                                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <div class="modal-body">
+                                  <!-- Display the documents here. You might need to adjust this part based on how you're storing and retrieving the documents. -->
+                                  <% for (let doc in lead.documents) { %>
+                                    <% if (lead.documents[doc]) { %>
+                                      <h5>
+                                        <%= doc.charAt(0).toUpperCase() + doc.slice(1) %>:
+                                      </h5>
+                                      <% let extension=lead.documents[doc].split('.').pop(); %>
+                                        <% if (extension==='pdf' ) { %>
+
+                                          <iframe src="../<%= lead.documents[doc] %>" width="100%"
+                                            height="300px"></iframe>
+
+                                          <% } else { %>
+                                            <a href="../<%= lead.documents[doc] %>" target="_blank">
+                                              <img src="../<%= lead.documents[doc] %>" width="100%">
+                                            </a>
+                                            <% } %>
+                                              <% } %>
+                                                <% } %>
+                                </div>
+
+
+
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                              </div>
+
                             </div>
-                            <div class="modal-body">
-                              <!-- Display the documents here. You might need to adjust this part based on how you're storing and retrieving the documents. -->
-                              <% for (let doc in lead.documents) { %>
-                                <% if (lead.documents[doc]) { %>
-                                  <h5><%= doc.charAt(0).toUpperCase() + doc.slice(1) %>:</h5>
-                                  <% let extension = lead.documents[doc].split('.').pop(); %>
-                                  <% if (extension === 'pdf') { %>
-                                
-                                    <iframe src="../<%= lead.documents[doc] %>" width="100%" height="300px"></iframe>
-                                 
-                                  <% } else { %>
-                                    <a href="../<%= lead.documents[doc] %>" target="_blank">
-                                      <img src="../<%= lead.documents[doc] %>" width="100%">
-                                    </a>
-                                  <% } %>
-                                <% } %>
-                              <% } %>
-                            </div>
-                            
-                            
-                            
-                            <div class="modal-footer">
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
+
                           </div>
-                        </div>
-                      </div>
+
+                          <% if (userType==='admin' ) { %>
+                            <!-- Assignment Modal -->
+                            <div class="modal fade" id="assignModal<%= lead._id %>" tabindex="-1" role="dialog"
+                              aria-labelledby="assignModalLabel<%= lead._id %>" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="assignModalLabel<%= lead._id %>">Assign Lead: <%=
+                                        lead.name %>
+                                    </h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <form action="/dashboard/leads/assign-lead" method="POST">
+                                      <input type="hidden" name="leadId" value="<%= lead._id %>">
+                                      <div class="form-group">
+                                        <label for="assignType<%= lead._id %>">Assign To:</label>
+                                        <select name="assignType" id="assignType<%= lead._id %>" class="form-control p-2"
+                                          required>
+                                          <option value="">Select Type</option>
+                                          <option value="agent">Agent</option>
+                                          <option value="partner">Partner</option>
+                                          <option value="">No One</option> <!-- Add this option -->
+                                        </select>
+                                      </div>
+                                      <div class="form-group">
+                                        <label id="labelhide" for="assignedTo<%= lead._id %>">Select User:</label>
+                                        <select name="assignedTo" id="assignedTo<%= lead._id %>" class="form-control p-2"
+                                        required>
+                                          <option value="">Select User</option>
+                                        </select>
+                                      </div>
+                                      <button type="submit" class="btn btn-primary">Assign</button>
+                                    </form>
+                                    
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <% } %>
                     </td>
                   </tr>
                   <% }); %>
               </tbody>
             </table>
+
+
           </div>
         </div>
       </main>
     </div>
   </div>
+ 
+  <script>
+   document.addEventListener('DOMContentLoaded', function () {
+  const assignTypeSelects = document.querySelectorAll('select[name="assignType"]');
+  const agents = <%- JSON.stringify(agents) %>;
+  const partners = <%- JSON.stringify(partners) %>;
+
+  assignTypeSelects.forEach(select => {
+    select.addEventListener('change', function () {
+      const assignedToSelect = this.closest('.modal-body').querySelector('select[name="assignedTo"]');
+      assignedToSelect.innerHTML = '<option value="">Select User</option>';
+      const selectedType = this.value;
+      const users = selectedType === 'agent' ? agents : selectedType === 'partner' ? partners : []; // Check if selectedType is empty
+
+      users.forEach(user => {
+        const option = document.createElement('option');
+        option.value = user._id;
+        option.textContent = user.username;
+        assignedToSelect.appendChild(option);
+      });
+
+      // If "No One" is selected, remove the required attribute from the assignedTo field
+      if (selectedType === '') {
+        assignedToSelect.value = '';
+        assignedToSelect.removeAttribute('required');
+        assignedToSelect.style.display="none"
+        document.getElementById("labelhide").style.display="none"
+      } else {
+        assignedToSelect.setAttribute('required', true);
+        assignedToSelect.style.display="block"
+        document.getElementById("labelhide").style.display="block"
+      }
+    });
+  });
+});
+  </script>
 </body>
 <script src="/js/navToggle.js"></script>
+
 </html>

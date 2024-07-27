@@ -160,7 +160,7 @@
               <input type="text" name="username" placeholder="Username" value="<%= user.username %>" required>
               <label for="password">Password</label>
               <input type="password" name="password" placeholder="Password" value="<%= user.password %>" required>
-              <% if (user.userType === 'agent') { %>
+              <% if (user.userType === 'agent' || user.userType === 'partner') { %>
               <div id="leadAccess">
                 <input type="checkbox" id="creditcard" name="leadAccess" value="creditcard" <%= user.leadAccess.includes('creditcard') ? 'checked' : '' %>>
                 <label for="creditcard">Credit Card</label>
