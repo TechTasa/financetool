@@ -180,7 +180,11 @@ hr {
   cursor: pointer;
   font-weight: 500;
 }
-
+.logout{
+  background-color: red;
+  color: #ffffff;
+  border: none;
+}
 .focus {
   display: flex;
   justify-content: center;

@@ -35,10 +35,28 @@ router.post(
   leadController.applyLoan
 );
 
-// Show the form
+
 router.get("/apply/:type", (req, res) => {
-  const loggedin = req.session.user;
-  res.render("apply", { type: req.params.type, loggedin });
+  // let loggedin = req.session.user;
+  // console.log(loggedin);
+  // if (loggedin == undefined) {
+  //   loggedin="no user"
+  // }
+  // console.log(loggedin);
+  // res.render("apply", { type: req.params.type, loggedin });
+  if (req.session && req.session.user) {
+    req.user = req.session.user;
+    res.render("apply", { 
+      type: req.params.type, 
+      loggedin: true, 
+      user: req.user 
+    });
+  } else {
+    res.render("apply", { 
+      type: req.params.type, 
+      loggedin: false 
+    });
+  }
 });
 
 module.exports = router;

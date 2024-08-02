@@ -138,8 +138,13 @@
                     </li>
                     <% } %>
                     <li class="nav-item">
-                        <a href="" class="nav-link font-regular" id="writertBtn">Blog Writer</a>
+                      <a href="" class="nav-link font-regular" id="writertBtn">Blog Writer</a>
                     </li>
+                    <% if (userType === 'admin') { %>
+                    <li class="nav-item">
+                        <a href="" class="nav-link font-regular" id="customerBtn">Customer</a>
+                    </li>
+                    <% } %>
                 </ul>
             </div>
         </div>
@@ -159,6 +164,31 @@
               </thead>
               <tbody>
                 <% users.filter(user => user.userType === 'admin').forEach(function(user) { %>
+                  <tr>
+                    <td><%= user.username %></td>
+                    <td><%= user.userType %></td>
+                    <td >
+                      <a href="/dashboard/management/edit/<%= user._id %>" class="btn btn-sm btn-neutral">Edit</a>
+                     
+                  </td>
+                  <td>
+                    <a href="/dashboard/management/delete/<%= user._id %>" onclick="return confirm('Are you sure you want to delete this user?');" class="btn btn-sm btn-neutral"><i class="bi bi-trash"></i></a>
+                  </td>
+                  </tr>
+                  <% }); %>
+              </tbody>
+            </table>
+            <table style="display: none;" id="customertable" class="table table-hover table-nowrap">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">Username</th>
+                  <th scope="col">User Type</th>
+                  <th colspan="2" scope="col">Actions</th>
+        
+                </tr>
+              </thead>
+              <tbody>
+                <% users.filter(user => user.userType === 'customer').forEach(function(user) { %>
                   <tr>
                     <td><%= user.username %></td>
                     <td><%= user.userType %></td>
@@ -299,8 +329,30 @@ document.getElementById('hrBtn').classList.remove("active");
 document.getElementById('writertBtn').classList.remove("active");
 document.getElementById('partnertable').style.display="none";
 document.getElementById('partnerBtn').classList.remove("active");
+document.getElementById('customertable').style.display="none";
+document.getElementById('customerBtn').classList.remove("active");
 })
   }
+
+  if (document.getElementById('customerBtn')) {
+    document.getElementById('customerBtn').addEventListener("click",(e)=>{
+e.preventDefault();
+document.getElementById('admintable').style.display="none";
+document.getElementById('agenttable').style.display="none";
+document.getElementById('hrtable').style.display="none";
+document.getElementById('writertable').style.display="none";
+document.getElementById('adminBtn').classList.remove("active");
+document.getElementById('agentBtn').classList.remove("active");
+document.getElementById('hrBtn').classList.remove("active");
+document.getElementById('hrBtn').classList.remove("active");
+document.getElementById('writertBtn').classList.remove("active");
+document.getElementById('partnertable').style.display="none";
+document.getElementById('partnerBtn').classList.remove("active");
+document.getElementById('customertable').style.display="table";
+document.getElementById('customerBtn').classList.add("active");
+})
+  }
+
   if (document.getElementById('partnerBtn')) {
     document.getElementById('partnerBtn').addEventListener("click",(e)=>{
 e.preventDefault();
@@ -315,6 +367,8 @@ document.getElementById('hrBtn').classList.remove("active");
 document.getElementById('hrBtn').classList.remove("active");
 document.getElementById('writertBtn').classList.remove("active");
 document.getElementById('partnerBtn').classList.add("active");
+document.getElementById('customertable').style.display="none";
+document.getElementById('customerBtn').classList.remove("active");
 })
   }
 document.getElementById('agentBtn').addEventListener("click",(e)=>{
@@ -329,6 +383,8 @@ document.getElementById('hrBtn').classList.remove("active");
 document.getElementById('writertBtn').classList.remove("active");
 document.getElementById('partnertable').style.display="none";
 document.getElementById('partnerBtn').classList.remove("active");
+document.getElementById('customertable').style.display="none";
+document.getElementById('customerBtn').classList.remove("active");
 })
 if (document.getElementById('hrBtn')) {
   document.getElementById('hrBtn').addEventListener("click",(e)=>{
@@ -343,6 +399,8 @@ document.getElementById('agentBtn').classList.remove("active");
 document.getElementById('writertBtn').classList.remove("active");
 document.getElementById('partnertable').style.display="none";
 document.getElementById('partnerBtn').classList.remove("active");
+document.getElementById('customertable').style.display="none";
+document.getElementById('customerBtn').classList.remove("active");
 })
 }
 if (document.getElementById('writertBtn')) {
@@ -358,6 +416,8 @@ document.getElementById('agentBtn').classList.remove("active");
 document.getElementById('hrBtn').classList.remove("active");
 document.getElementById('partnertable').style.display="none";
 document.getElementById('partnerBtn').classList.remove("active");
+document.getElementById('customertable').style.display="none";
+document.getElementById('customerBtn').classList.remove("active");
 })
 }
 

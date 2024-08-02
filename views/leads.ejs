@@ -65,10 +65,10 @@
                 </a>
               </li>
               <% } %>
-                <% if (userType==='admin' || userType==='agent' || userType==='partner') { %>
+                <% if (userType==='admin' || userType==='agent' || userType==='partner' || userType==='customer') { %>
                   <li class="nav-item">
                     <a class="nav-link" href="/dashboard/leads">
-                      <i class="bi bi-bar-chart"></i> Leads
+                      <i class="bi bi-bar-chart"></i> <%= userType === 'customer' ? 'My Leads' : 'Leads' %>
                     </a>
                   </li>
                   <% } %>
@@ -173,6 +173,12 @@
             <p class="card-text p-2">Reach By: <%= lead.reachBy %></p>
             <p class="card-text p-2">Lead Type: <%= lead.leadType %></p>
             <p class="card-text p-2">Date/Time: <%= lead.createdAt %></p>
+            <p class="card-text p-2">Customer ID: <% if (lead.userId) { %>
+              <%= lead.userId.username %>
+            <% } else { %>
+              Not Assigned
+            <% } %></p>
+            <p class="text-primary p-2">Status: <%= lead.status %></p>
             <p class="text-danger p-2 ">Assigned To: 
               <% if (lead.assignedTo) { %>
                 <%= lead.assignedTo.username %>
@@ -180,7 +186,7 @@
                 Not Assigned
               <% } %>
             </p>
-            <div class="d-flex justify-content-between flex-wrap">
+            <div class="d-flex justify-content-around flex-wrap">
               <button type="button" class="btn btn-primary btn-sm mb-2" data-toggle="modal"
                 data-target="#documentsModal<%= lead._id %>">
                 View Documents
@@ -191,10 +197,49 @@
                   Assign Lead
                 </button>
               <% } %>
+              <% if (userType==='admin' ) { %>
+                <button type="button" class="btn btn-info btn-sm mb-2" data-toggle="modal" data-target="#statusModal<%= lead._id %>">
+                  Lead Status
+                </button>
+              <% } %>
             </div>
           </div>
         </div>
   
+
+<!-- Lead Status Modal -->
+<div class="modal fade" id="statusModal<%= lead._id %>" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel<%= lead._id %>" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="statusModalLabel<%= lead._id %>">Update Lead Status: <%= lead.name %></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/dashboard/leads/update-status" method="POST">
+          <input type="hidden" name="leadId" value="<%= lead._id %>">
+          <div class="form-group">
+            <label for="status<%= lead._id %>">Status:</label>
+            <select name="status" id="status<%= lead._id %>" class="form-control p-2" required>
+              <option value="pending" <%= lead.status === 'pending' ? 'selected' : '' %>>Pending</option>
+              <option value="in_progress" <%= lead.status === 'in_progress' ? 'selected' : '' %>>In Progress</option>
+              <option value="done" <%= lead.status === 'done' ? 'selected' : '' %>>Done</option>
+              <option value="rejected" <%= lead.status === 'rejected' ? 'selected' : '' %>>Rejected</option>
+              <option value="on_hold" <%= lead.status === 'on_hold' ? 'selected' : '' %>>On Hold</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Update Status</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
         <!-- Documents Modal -->
         <div class="modal fade" id="documentsModal<%= lead._id %>" tabindex="-1" role="dialog"
           aria-labelledby="documentsModalLabel<%= lead._id %>" aria-hidden="true">
@@ -288,6 +333,7 @@
         <th scope="col">Lead Type</th>
         <th scope="col">Date/Time</th>
         <th scope="col">Assigned To</th>
+        <th scope="col">Status</th>
         <th scope="col">Actions</th>
       </tr>
     </thead>
@@ -324,25 +370,34 @@
           <td>
             <% if (lead.assignedTo) { %>
               <%= lead.assignedTo.username %>
-                <% } else { %>
-                  Not Assigned
-                  <% } %>
-          </td>
+              <% } else { %>
+                Not Assigned
+                <% } %>
+              </td>
+              <td>
+               <%= lead.status %>
+              </td>
           <td>
             <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-              data-target="#documentsModal<%= lead._id %>">
+              data-target="#documentsModalTable<%= lead._id %>">
               View Documents
             </button>
             <% if (userType==='admin' ) { %>
               <button type="button" class="btn btn-success btn-sm" data-toggle="modal"
-                data-target="#assignModal<%= lead._id %>">
+                data-target="#assignModalTable<%= lead._id %>">
                 Assign Lead
               </button>
               <% } %>
+            <% if (userType==='admin' ) { %>
+              <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+              data-target="#statusModalTable<%= lead._id %>">
+              Update Status
+            </button>
+              <% } %>
 
                 <!-- Documents Modal -->
-                <div class="modal fade" id="documentsModal<%= lead._id %>" tabindex="-1" role="dialog"
-                  aria-labelledby="documentsModalLabel<%= lead._id %>" aria-hidden="true">
+                <div class="modal fade" id="documentsModalTable<%= lead._id %>" tabindex="-1" role="dialog"
+                  aria-labelledby="documentsModalLabelTable<%= lead._id %>" aria-hidden="true">
                   <!-- ... (keep your existing documents modal code) ... -->
 
 
@@ -391,8 +446,8 @@
 
                 <% if (userType==='admin' ) { %>
                   <!-- Assignment Modal -->
-                  <div class="modal fade" id="assignModal<%= lead._id %>" tabindex="-1" role="dialog"
-                    aria-labelledby="assignModalLabel<%= lead._id %>" aria-hidden="true">
+                  <div class="modal fade" id="assignModalTable<%= lead._id %>" tabindex="-1" role="dialog"
+                    aria-labelledby="assignModalLabelTable<%= lead._id %>" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -431,6 +486,40 @@
                     </div>
                   </div>
                   <% } %>
+
+
+
+
+                  <!-- Lead Status Modal -->
+          <div class="modal fade" id="statusModalTable<%= lead._id %>" tabindex="-1" role="dialog"
+            aria-labelledby="statusModalLabelTable<%= lead._id %>" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="statusModalLabelTable<%= lead._id %>">Update Lead Status: <%= lead.name %></h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form action="/dashboard/leads/update-status" method="POST">
+                    <input type="hidden" name="leadId" value="<%= lead._id %>">
+                    <div class="form-group">
+                      <label for="statusTable<%= lead._id %>">Status:</label>
+                      <select name="status" id="statusTable<%= lead._id %>" class="form-control p-2" required>
+                        <option value="pending" <%= lead.status === 'pending' ? 'selected' : '' %>>Pending</option>
+                        <option value="in_progress" <%= lead.status === 'in_progress' ? 'selected' : '' %>>In Progress</option>
+                        <option value="done" <%= lead.status === 'done' ? 'selected' : '' %>>Done</option>
+                        <option value="rejected" <%= lead.status === 'rejected' ? 'selected' : '' %>>Rejected</option>
+                        <option value="on_hold" <%= lead.status === 'on_hold' ? 'selected' : '' %>>On Hold</option>
+                      </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Status</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
           </td>
         </tr>
         <% }); %>
@@ -444,6 +533,7 @@
       </main>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
  <script>
 document.getElementById("cardbtn").addEventListener("click",()=>{
   event.preventDefault();
@@ -462,6 +552,15 @@ document.getElementById("tablebtn").addEventListener("click",()=>{
   document.getElementById("tablebtn").classList.add("active");
 
 })
+ // Reinitialize Bootstrap modals
+ let modals = document.querySelectorAll('.modal');
+  modals.forEach(modal => {
+    let bootstrapModal = bootstrap.Modal.getInstance(modal);
+    if (bootstrapModal) {
+      bootstrapModal.dispose();
+    }
+    new bootstrap.Modal(modal);
+  });
  </script>
   <script>
    document.addEventListener('DOMContentLoaded', function () {

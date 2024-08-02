@@ -47,10 +47,10 @@
                               </a>
                           </li>
                       <% } %>
-                      <% if (userType === 'admin' || userType === 'agent'|| userType === 'partner') { %>
+                      <% if (userType==='admin' || userType==='agent' || userType==='partner' || userType==='customer') { %>
                         <li class="nav-item">
                           <a class="nav-link" href="/dashboard/leads">
-                            <i class="bi bi-bar-chart"></i> Leads
+                            <i class="bi bi-bar-chart"></i> <%= userType === 'customer' ? 'My Leads' : 'Leads' %>
                           </a>
                         </li>
                         <% } %>

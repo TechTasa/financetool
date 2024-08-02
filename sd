@@ -1,3 +1,5 @@
+authController
+
 const User = require('../models/User');
 
 exports.signup = async (req, res) => {
@@ -15,7 +17,12 @@ exports.signup = async (req, res) => {
     // If not, create a new user
     const user = await User.create({ username, password, userType });
     req.session.user = user;
-    res.redirect('/');
+    res.status(201).json({
+      status: 'success',
+      data: {
+        user
+      }
+    });
   } catch (err) {
     res.status(400).json({
       status: 'error',
@@ -23,36 +30,6 @@ exports.signup = async (req, res) => {
     });
   }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 exports.login = async (req, res) => {
   const { username, password } = req.body;
@@ -80,3 +57,34 @@ exports.login = async (req, res) => {
     });
   }
 };
+
+
+authRoutes
+
+const express = require('express');
+const authController = require('../controllers/authController');
+
+const router = express.Router();
+
+router.post('/signup', authController.signup);
+router.post('/login', authController.login);
+
+router.get('/signup', (req, res) => {
+    res.render('signup');
+  });
+  
+router.get('/login', (req, res) => {
+    res.render('login');
+  });
+router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+      if (err) {
+        return res.redirect('/');
+      }
+      res.clearCookie('sid');
+      res.redirect('/');
+    });
+  });
+  
+  
+module.exports = router;

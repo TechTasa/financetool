@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.get('/', leadsController.getLeads);
 router.post('/assign-lead', leadsController.assignLead);
+router.post('/update-status', leadsController.updateLeadStatus); // Add this new route
 
 module.exports = router;

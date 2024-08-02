@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const User = require('../models/User');
 const LeadSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -8,6 +8,20 @@ const LeadSchema = new mongoose.Schema({
   email: {
     type: String,
     required: [true, 'Please provide email']
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: [true, 'No User Logged In'],
+    validate: {
+      validator: async function(value) {
+        const user = await User.findById(value);
+        if (!user || user.userType !== 'customer') {
+          throw new Error('Only customers are allowed');
+        }
+      },
+      message: 'Only customers are allowed'
+    }
   },
   number: {
     type: String,
@@ -45,6 +59,11 @@ const LeadSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   },
+  status: {
+    type: String,
+    enum: ['pending', 'in_progress', 'done', 'rejected', 'on_hold'],
+    default: 'pending'
+  }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Lead', LeadSchema);
