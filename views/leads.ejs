@@ -295,12 +295,21 @@
                     <input type="hidden" name="leadId" value="<%= lead._id %>">
                     <div class="form-group">
                       <label for="assignType<%= lead._id %>">Assign To:</label>
-                      <select name="assignType" id="assignType<%= lead._id %>" class="form-control p-2" required>
+                      <!-- <select name="assignType" id="assignType<%= lead._id %>" class="form-control p-2" required>
                         <option value="">Select Type</option>
                         <option value="agent">Agent</option>
                         <option value="partner">Partner</option>
-                        <option value="">No One</option> <!-- Add this option -->
-                      </select>
+                        <option value="">No One</option> 
+                      </select> -->
+                      <select name="assignType" id="assignType<%= lead._id %>" class="form-control p-2 assign-type-select" 
+                        data-agents='<%- JSON.stringify(agents) %>' 
+                        data-partners='<%- JSON.stringify(partners) %>' 
+                        required>
+                  <option value="">Select Type</option>
+                  <option value="agent">Agent</option>
+                  <option value="partner">Partner</option>
+                  <option value="">No One</option>
+                </select>
                     </div>
                     <div class="form-group">
                       <label id="labelhide" for="assignedTo<%= lead._id %>">Select User:</label>
@@ -562,18 +571,11 @@ document.getElementById("tablebtn").addEventListener("click",()=>{
     new bootstrap.Modal(modal);
   });
  </script>
-
- <script>
-  window.agentsData = '<%- JSON.stringify(agents || []) %>';
-  window.partnersData = '<%- JSON.stringify(partners || []) %>';
-</script>
-  <script>
+  <!-- <script>
    document.addEventListener('DOMContentLoaded', function () {
   const assignTypeSelects = document.querySelectorAll('select[name="assignType"]');
-
-   const agents = JSON.parse(window.agentsData || '[]');
-  const partners = JSON.parse(window.partnersData || '[]');
-
+  const agents = <%- JSON.stringify(agents) %>;
+  const partners = <%- JSON.stringify(partners) %>;
   assignTypeSelects.forEach(select => {
     select.addEventListener('change', function () {
       const assignedToSelect = this.closest('.modal-body').querySelector('select[name="assignedTo"]');
@@ -602,6 +604,41 @@ document.getElementById("tablebtn").addEventListener("click",()=>{
     });
   });
 });
+  </script> -->
+
+  <script>
+   
+    const assignTypeSelects = document.querySelectorAll('.assign-type-select');
+    assignTypeSelects.forEach(select => {
+      const agents = JSON.parse(select.dataset.agents);
+      const partners = JSON.parse(select.dataset.partners);
+      
+      select.addEventListener('change', function () {
+        const assignedToSelect = this.closest('.modal-body').querySelector('select[name="assignedTo"]');
+        assignedToSelect.innerHTML = '<option value="">Select User</option>';
+        const selectedType = this.value;
+        const users = selectedType === 'agent' ? agents : selectedType === 'partner' ? partners : [];
+  
+        users.forEach(user => {
+          const option = document.createElement('option');
+          option.value = user._id;
+          option.textContent = user.username;
+          assignedToSelect.appendChild(option);
+        });
+  
+        if (selectedType === '') {
+          assignedToSelect.value = '';
+          assignedToSelect.removeAttribute('required');
+          assignedToSelect.style.display = "none";
+          this.closest('.modal-body').querySelector("#labelhide").style.display = "none";
+        } else {
+          assignedToSelect.setAttribute('required', true);
+          assignedToSelect.style.display = "block";
+          this.closest('.modal-body').querySelector("#labelhide").style.display = "block";
+        }
+      });
+    });
+ 
   </script>
 </body>
 <script src="/js/navToggle.js"></script>
