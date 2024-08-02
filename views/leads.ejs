@@ -562,12 +562,17 @@ document.getElementById("tablebtn").addEventListener("click",()=>{
     new bootstrap.Modal(modal);
   });
  </script>
+
+ <script>
+  window.agentsData = '<%- JSON.stringify(agents || []) %>';
+  window.partnersData = '<%- JSON.stringify(partners || []) %>';
+</script>
   <script>
    document.addEventListener('DOMContentLoaded', function () {
   const assignTypeSelects = document.querySelectorAll('select[name="assignType"]');
 
-  window.agents = <%- JSON.stringify(agents) %>;
-  window.partners = <%- JSON.stringify(partners) %>;
+   const agents = JSON.parse(window.agentsData || '[]');
+  const partners = JSON.parse(window.partnersData || '[]');
 
   assignTypeSelects.forEach(select => {
     select.addEventListener('change', function () {
