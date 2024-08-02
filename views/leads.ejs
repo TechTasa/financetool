@@ -565,8 +565,7 @@ document.getElementById("tablebtn").addEventListener("click",()=>{
   <script>
    document.addEventListener('DOMContentLoaded', function () {
   const assignTypeSelects = document.querySelectorAll('select[name="assignType"]');
-  // const agents = <%- JSON.stringify(agents) %>;
-  // const partners = <%- JSON.stringify(partners) %>;
+
   window.agents = <%- JSON.stringify(agents) %>;
   window.partners = <%- JSON.stringify(partners) %>;
 
