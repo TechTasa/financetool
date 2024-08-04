@@ -1,286 +1,370 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Apply for a <%= type %> Loan</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/apply.css">
-   <style>
+  <title>Apply for a <%= type %> Loan</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/apply.css">
+  <style>
     #dropdown-content {
-  display: none;
-  flex-wrap: wrap;
-  gap: 30px;
-}
-.dropdownbtn{
-    outline: none;
-    color: #fff;
-    border: none;
-    font-size: 18px;
-    font-weight: 500;
-    border-radius: 5px;
-    background: linear-gradient(135deg, var(--main-blue), var(--main-purple));
-    padding: 0.5rem;
-    margin-bottom: 1rem;
-}
+      display: none;
+      flex-wrap: wrap;
+      gap: 30px;
+    }
 
-#loginModal {
-  z-index: 100;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-}
+    .dropdownbtn {
+      outline: none;
+      color: #fff;
+      border: none;
+      font-size: 18px;
+      font-weight: 500;
+      border-radius: 5px;
+      background: linear-gradient(135deg, var(--main-blue), var(--main-purple));
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+    }
 
-#loginModal .modal-content {
-  background-color: #fcfcfc;
-  padding: 20px;
-  border-radius: 5px;
-  width: 50%;
-  height: 50%;
-  
-}
+    :root {
+      --apple-blue: #0071e3;
+      --apple-gray: #86868b;
+    }
 
-  #loginModal h2 {
-    text-align: center;
-  }
+    .modal {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
 
-  #loginModal button {
-    background-color: #4CAF50;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+    .modal-content {
+      background-color: white;
+      padding: 40px;
+      border-radius: 12px;
+      width: 400px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
 
-  #loginModal button:hover {
-    background-color: #3e8e41;
-  }
+    h2 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      text-align: center;
+      color: #1d1d1f;
+    }
 
-  #loginForm, #registerForm {
-    margin-top: 20px;
-  }
+    .button-group {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
 
-  #loginForm input, #registerForm input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
+    .toggle-button {
+      background: none;
+      border: none;
+      font-size: 16px;
+      padding: 8px 16px;
+      cursor: pointer;
+      color: var(--apple-gray);
+      transition: color 0.3s;
+    }
 
-  #loginForm button, #registerForm button {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-   </style>
-  
+    .toggle-button.active {
+      color: var(--apple-blue);
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 16px;
+      border: 1px solid #d2d2d7;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    .submit-button {
+      width: 100%;
+      padding: 12px;
+      background-color: var(--apple-blue);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .submit-button:hover {
+      background-color: #0051a8;
+    }
+
+    .forgot-link {
+      display: block;
+      text-align: center;
+      margin-top: 16px;
+      color: var(--apple-blue);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    #phoneVerificationContainer {
+      width: 100%;
+      margin-top: 16px;
+    }
+
+    .pe_signin_button>* {
+      width: 100%;
+      /* Add any specific styles for the phone verification button here */
+    }
+  </style>
+
 </head>
+
 <body onload="loadScript()">
   <% if (!loggedin) { %>
     <div id="loginModal" class="modal">
       <div class="modal-content">
-        <h2>Login or Register</h2>
-        <button onclick="showLoginForm()">Login</button>
-        <button onclick="showRegisterForm()">Register</button>
-        <div id="loginForm" style="display:none;">
+        <h2>Sign In or Create an Account</h2>
+        <div class="button-group">
+          <button onclick="showLoginForm()" class="toggle-button active">Sign In</button>
+          <button onclick="showRegisterForm()" class="toggle-button">Create Account</button>
+        </div>
+        <div id="loginForm">
           <form action="/auth/login" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
+            <input type="text" name="username" placeholder="TechTasa ID" required>
             <input type="password" name="password" placeholder="Password" required>
-            <button type="submit">Login</button>
+            <button type="submit" class="submit-button">Sign In</button>
           </form>
+          <a href="#" class="forgot-link">Forgot TechTasa ID or password?</a>
         </div>
         <div id="registerForm" style="display:none;">
-          <form action="/auth/signup" method="POST">
-            <input type="text" name="username" placeholder="Username" required>
+          <form id="signupForm" action="/auth/signup" method="POST">
+            <input type="text" name="username" placeholder="TechTasa ID" required>
             <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
             <input type="hidden" name="userType" value="customer">
-            <button type="submit">Register</button>
-          
+            <input type="hidden" name="phone" id="verifiedPhone">
+            <input type="hidden" name="countryCode" id="verifiedCountryCode">
+            <div id="phoneVerificationContainer">
+              <div class="pe_signin_button" data-client-id="18437036855414457333"></div>
+            </div>
           </form>
         </div>
-     
       </div>
     </div>
-  <% } %>
-  <script>
 
+    <script>
+      function loadScript() {
+        const script = document.createElement('script');
+        script.src = 'https://www.phone.email/sign_in_button_v1.js';
+        script.async = true;
 
+        script.onload = function () {
+          const container = document.getElementById('phoneVerificationContainer');
 
+          // Add click event listener to the container
+          container.addEventListener('click', function (event) {
+            const form = document.getElementById('signupForm');
+            const username = form.username.value;
+            const password = form.password.value;
+            const confirmPassword = form.confirmPassword.value;
 
+            if (!username || !password || !confirmPassword) {
+              event.preventDefault();
+              event.stopPropagation();
+              alert('Please fill in all required fields before verifying your phone number.');
+              return false;
+            }
 
+            if (password !== confirmPassword) {
+              event.preventDefault();
+              event.stopPropagation();
+              alert('Passwords do not match.');
+              return false;
+            }
+          }, true);  // Use capture phase to intercept the click before the button's own listener
+        }
 
+        document.body.appendChild(script);
 
+        window.phoneEmailListener = (userObj) => {
+          const { user_json_url } = userObj;
+          fetch('/auth/verify-phone', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ user_json_url }),
+          })
+            .then(response => response.json())
+            .then(data => {
+              if (data.success) {
+                document.getElementById('verifiedPhone').value = data.phone;
+                document.getElementById('verifiedCountryCode').value = data.countryCode;
+                // alert('Phone verification successful! The form will now be submitted.');
+                document.getElementById('signupForm').submit();
+              } else {
+                alert('Phone verification failed. Please try again.');
+              }
+            })
+            .catch(error => {
+              console.error('Error:', error);
+              alert('An error occurred during phone verification.');
+            });
+        };
+      }
 
-    document.addEventListener('contextmenu', function(e) {
-  e.preventDefault();
-});
+      document.addEventListener('DOMContentLoaded', loadScript);
+    </script>
+    <% } %>
 
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'F12') {
-    e.preventDefault();
-  }
-});
-
-document.onkeydown = function(e) {
-  if (e.ctrlKey && 
-      (e.keyCode === 67 || 
-       e.keyCode === 86 || 
-       e.keyCode === 85 || 
-       e.keyCode === 117)) {
-    alert('Not allowed!');
-    return false;
-  } else {
-    return true;
-  }
-};
-  </script>
-    <nav class="navbar">
+      <nav class="navbar">
         <div id="menu"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="44"
-                height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#1b1dc7" fill="none" stroke-linecap="round"
-                stroke-linejoin="round">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <line x1="4" y1="6" x2="20" y2="6" />
-                <line x1="4" y1="12" x2="20" y2="12" />
-                <line x1="4" y1="18" x2="20" y2="18" />
-            </svg></div>
-            <a href="/" class="logo"><img src="/images/XpertRupees_Logo.svg" alt=""></a>
-            <ul class="links">
-                <li class=" link active"><a href="/">Home</a></li>
-                <li class=" link"><a href="/services">Services</a></li>
-                <li class=" link"><a href="/career">Career</a></li>
-                <li class=" link"><a href="/contact">Contact</a></li>
-            </ul>
-          
-             
-            <% if (loggedin) { %>
-              <button class="cta" onClick='location="/dashboard"'>Dashboard</button>
+            height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#1b1dc7" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <line x1="4" y1="6" x2="20" y2="6" />
+            <line x1="4" y1="12" x2="20" y2="12" />
+            <line x1="4" y1="18" x2="20" y2="18" />
+          </svg></div>
+        <a href="/" class="logo"><img src="/images/XpertRupees_Logo.svg" alt=""></a>
+        <ul class="links">
+          <li class=" link active"><a href="/">Home</a></li>
+          <li class=" link"><a href="/services">Services</a></li>
+          <li class=" link"><a href="/career">Career</a></li>
+          <li class=" link"><a href="/contact">Contact</a></li>
+        </ul>
+
+
+        <% if (loggedin) { %>
+          <button class="cta" onClick='location="/dashboard"'>Dashboard</button>
           <% } else { %>
-              <button class="cta" onClick='location="/auth/login"'>Sign In</button>
-          <% } %>
-            
-    </nav>
-    <div class="container">
-        <div class="title">Apply for a <%= type %></div>
+            <button class="cta" onClick='location="/auth/login"'>Sign In</button>
+            <% } %>
+
+      </nav>
+      <div class="container">
+        <div class="title">Apply for a <%= type %>
+        </div>
         <form action="/loan/apply/<%= type %>" method="post" enctype="multipart/form-data">
           <% if (loggedin) { %>
-          <input type="hidden" name="userId" value="<%= user._id %>">
-          <% }  %>
-          <div class="user__details">
-            <div class="input__box">
-              <span class="details">Full Name</span>
-              <input type="text" id="name" name="name" placeholder="E.g: John Smith" required>
-            </div>
-            <div class="input__box">
-              <span class="details">Email</span>
-              <input type="email" id="email" name="email" placeholder="johnsmith@hotmail.com" required>
-            </div>
-            <div class="input__box">
-              <span class="details">Phone Number</span>
-              <input type="tel" id="number" name="number" placeholder="012-345-6789" required>
-            </div>
-            <div class="input__box">
-                <span class="details">Salary</span>
-                <input type="text" id="salary" name="salary" placeholder="50000" required>
-              </div>
-              <div class="input__box">
-                <span class="details">Address</span>
-                <input type="text" id="address" name="address" placeholder="Mountain View, California, United States" required>
-              </div>
-              <div class="input__box">
-                <span class="details">Company Name</span>
-                <input type="text" id="companyName" name="companyName" placeholder="Finance Tool" required>
-              </div>
-              <div class="input__box">
-                <span class="details">Best Time To Reach You</span>
-                <input type="time" id="timeToReach" name="timeToReach" placeholder="10 AM" required>
-              </div>
-              <div class="input__box">
-                <span class="details">Preferred Contact Method</span>
-                <select id="reachBy" name="reachBy">
+            <input type="hidden" name="userId" value="<%= user._id %>">
+            <% } %>
+              <div class="user__details">
+                <div class="input__box">
+                  <span class="details">Full Name</span>
+                  <input type="text" id="name" name="name" placeholder="E.g: John Smith" required>
+                </div>
+                <div class="input__box">
+                  <span class="details">Email</span>
+                  <input type="email" id="email" name="email" placeholder="johnsmith@hotmail.com" required>
+                </div>
+                <div class="input__box">
+                  <span class="details">Phone Number</span>
+                  <input type="tel" id="number" name="number" placeholder="012-345-6789" required>
+                </div>
+                <div class="input__box">
+                  <span class="details">Salary</span>
+                  <input type="text" id="salary" name="salary" placeholder="50000" required>
+                </div>
+                <div class="input__box">
+                  <span class="details">Address</span>
+                  <input type="text" id="address" name="address" placeholder="Mountain View, California, United States"
+                    required>
+                </div>
+                <div class="input__box">
+                  <span class="details">Company Name</span>
+                  <input type="text" id="companyName" name="companyName" placeholder="Finance Tool" required>
+                </div>
+                <div class="input__box">
+                  <span class="details">Best Time To Reach You</span>
+                  <input type="time" id="timeToReach" name="timeToReach" placeholder="10 AM" required>
+                </div>
+                <div class="input__box">
+                  <span class="details">Preferred Contact Method</span>
+                  <select id="reachBy" name="reachBy">
                     <option value="phone">Phone</option>
                     <option value="email">Email</option>
-                </select>
-              </div>
-              <% if (type=="personalloan" || type=="creditcard" || type=="microloan" || type=="homeloan") { %>
-                <div class="dropdown">
-                  <button class="dropdownbtn"  onclick="toggleDropdown(event)">Upload Documents(Optional)</button>
-                  <div id="dropdown-content">
-                    <div class="input__box">
-                      <span class="details">Pan Card (Photo or PDF)</span>
-                      <input type="file" id="pancard" name="pancard" >
-                    </div>
-                    <div class="input__box">
-                      <span class="details">Salary Slip (Photo or PDF)</span>
-                      <input type="file" id="salaryslip" name="salaryslip" >
-                    </div>
-                    <div class="input__box">
-                      <span class="details">Company ID Card (Photo or PDF)</span>
-                      <input type="file" id="companyid" name="companyid" >
-                    </div>
-                    <div class="input__box">
-                      <span class="details">Passport Size Photo (Photo or PDF)</span>
-                      <input type="file" id="passportSizePhoto" name="passportSizePhoto" >
-                    </div>
-                    <div class="input__box">
-                      <span class="details">Bank Statement (Photo or PDF)</span>
-                      <input type="file" id="bankStatement" name="bankStatement" >
-                    </div>
-                    <div class="input__box">
-                      <span class="details">Offer Letter(Photo or PDF)</span>
-                      <input type="file" id="offerLetter" name="offerLetter" >
-                    </div>
-                  </div>
+                  </select>
                 </div>
-            <% }  %>
-            <% if (type=="businessloan") { %>
-              <div class="dropdown">
-                <button class="dropdownbtn"  onclick="toggleDropdown(event)">Upload Documents(Optional)</button>
-                <div id="dropdown-content">
-                  <div class="input__box">
-                    <span class="details">Company Pan Card (Photo or PDF)</span>
-                    <input type="file" id=" companyPancard" name="companyPancard" >
+                <% if (type=="personalloan" || type=="creditcard" || type=="microloan" || type=="homeloan" ) { %>
+                  <div class="dropdown">
+                    <button class="dropdownbtn" onclick="toggleDropdown(event)">Upload Documents(Optional)</button>
+                    <div id="dropdown-content">
+                      <div class="input__box">
+                        <span class="details">Pan Card (Photo or PDF)</span>
+                        <input type="file" id="pancard" name="pancard">
+                      </div>
+                      <div class="input__box">
+                        <span class="details">Salary Slip (Photo or PDF)</span>
+                        <input type="file" id="salaryslip" name="salaryslip">
+                      </div>
+                      <div class="input__box">
+                        <span class="details">Company ID Card (Photo or PDF)</span>
+                        <input type="file" id="companyid" name="companyid">
+                      </div>
+                      <div class="input__box">
+                        <span class="details">Passport Size Photo (Photo or PDF)</span>
+                        <input type="file" id="passportSizePhoto" name="passportSizePhoto">
+                      </div>
+                      <div class="input__box">
+                        <span class="details">Bank Statement (Photo or PDF)</span>
+                        <input type="file" id="bankStatement" name="bankStatement">
+                      </div>
+                      <div class="input__box">
+                        <span class="details">Offer Letter(Photo or PDF)</span>
+                        <input type="file" id="offerLetter" name="offerLetter">
+                      </div>
+                    </div>
                   </div>
-                  <div class="input__box">
-                    <span class="details">ITR (Photo or PDF)</span>
-                    <input type="file" id="ITR" name="ITR" >
-                  </div>
-                  <div class="input__box">
-                    <span class="details">Company Bank Statement (Photo or PDF)</span>
-                    <input type="file" id="companyBankStatement" name="companyBankStatement" >
-                  </div>
-                  <div class="input__box">
-                    <span class="details">Company Address Proof(Photo or PDF)</span>
-                    <input type="file" id="companyAddressProof" name="companyAddressProof" >
-                  </div>
-                </div>
-              </div>
-          <% }  %>
-             
-          </div>
+                  <% } %>
+                    <% if (type=="businessloan" ) { %>
+                      <div class="dropdown">
+                        <button class="dropdownbtn" onclick="toggleDropdown(event)">Upload Documents(Optional)</button>
+                        <div id="dropdown-content">
+                          <div class="input__box">
+                            <span class="details">Company Pan Card (Photo or PDF)</span>
+                            <input type="file" id=" companyPancard" name="companyPancard">
+                          </div>
+                          <div class="input__box">
+                            <span class="details">ITR (Photo or PDF)</span>
+                            <input type="file" id="ITR" name="ITR">
+                          </div>
+                          <div class="input__box">
+                            <span class="details">Company Bank Statement (Photo or PDF)</span>
+                            <input type="file" id="companyBankStatement" name="companyBankStatement">
+                          </div>
+                          <div class="input__box">
+                            <span class="details">Company Address Proof(Photo or PDF)</span>
+                            <input type="file" id="companyAddressProof" name="companyAddressProof">
+                          </div>
+                        </div>
+                      </div>
+                      <% } %>
 
-          <div class="button">
-            <input type="submit" value="Submit">
-          </div>
+              </div>
+
+              <div class="button">
+                <input type="submit" value="Submit">
+              </div>
         </form>
-    </div>
+      </div>
 </body>
-<script src="/js/script.js"></script>
+<!-- <script src="/js/script.js"></script> -->
 <script>
-  window.onload = function() {
-  document.getElementById("dropdown-content").style.display = "none";
-}
+  window.onload = function () {
+    document.getElementById("dropdown-content").style.display = "none";
+  }
 
   function toggleDropdown() {
     var x = document.getElementById("dropdown-content");
@@ -291,23 +375,28 @@ document.onkeydown = function(e) {
       x.style.display = "none";
     }
   }
-  </script>
-  <script>
-    function showLoginForm() {
-      document.getElementById('loginForm').style.display = 'flex';
-      document.getElementById('registerForm').style.display = 'none';
-    }
-    
-    function showRegisterForm() {
-      document.getElementById('loginForm').style.display = 'none';
-      document.getElementById('registerForm').style.display = 'flex';
-    }
-    
-    // Show login modal on page load if not logged in
-    window.onload = function() {
+</script>
+<script>
+  function showLoginForm() {
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('registerForm').style.display = 'none';
+    document.querySelector('.toggle-button:nth-child(1)').classList.add('active');
+    document.querySelector('.toggle-button:nth-child(2)').classList.remove('active');
+  }
+
+  function showRegisterForm() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
+    document.querySelector('.toggle-button:nth-child(1)').classList.remove('active');
+    document.querySelector('.toggle-button:nth-child(2)').classList.add('active');
+  }
+
+  // Show login modal on page load if not logged in
+  window.onload = function () {
       <% if (!loggedin) { %>
-        document.getElementById('loginModal').style.display = 'flex';
+      document.getElementById('loginModal').style.display = 'flex';
       <% } %>
     }
-    </script>
+</script>
+
 </html>

@@ -12,17 +12,25 @@ const UserSchema = new mongoose.Schema({
   },
   userType: {
     type: String,
-    enum: ['admin', 'agent', 'hr','blog writer','partner','customer'],
+    enum: ['admin', 'agent', 'hr', 'blog writer', 'partner', 'customer'],
     required: [true, 'Please provide user type']
   },
   leadAccess: {
     type: Array,
     default: []
+  },
+  phone: {
+    type: String,
+    required: [true, 'Please provide phone number']
+  },
+  countryCode: {
+    type: String,
+    required: [true, 'Please provide country code']
   }
 });
 
 
-UserSchema.pre('save', function(next) {
+UserSchema.pre('save', function (next) {
   if (!this.isModified('password')) {
     return next();
   }
@@ -35,7 +43,7 @@ UserSchema.pre('save', function(next) {
   });
 });
 
-UserSchema.methods.checkPassword = function(password) {
+UserSchema.methods.checkPassword = function (password) {
   const passwordHash = this.password;
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, passwordHash, (err, same) => {

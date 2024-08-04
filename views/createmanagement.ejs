@@ -20,7 +20,7 @@
   max-width: 400px;
 }
 
-input[type="text"], input[type="password"], select {
+input[type="text"], input[type="password"],input[type="tel"], select {
   padding: 0.5rem;
   border-radius: 0.25rem;
   border: 1px solid #ddd;
@@ -54,7 +54,7 @@ button {
           <span class="navbar-toggler-icon"></span>
         </button>
         <!-- Brand -->
-        <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="#">
+        <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="/">
           <img src="/images/XpertRupees_Logo.svg" alt="...">
         </a>
 
@@ -169,38 +169,50 @@ button {
             <!-- <div class="table-responsive">
               
             </div> -->
+            <% if (typeof error !== 'undefined') { %>
+              <div class="alert alert-danger" role="alert">
+                <%= error %>
+              </div>
+            <% } %>
+            
             <form action="/dashboard/management/create" method="POST">
               <label for="username">User Name</label>
-              <input type="text" name="username" placeholder="Username" required>
+              <input type="text" name="username" placeholder="Username" required value="<%= typeof formData !== 'undefined' ? formData.username : '' %>">
+              
               <label for="password">Password</label>
               <input type="password" name="password" placeholder="Password" required>
+              
+              <label for="phone">Phone No</label>
+              <input type="tel" name="phone" placeholder="Phone" required maxlength="10" minlength="10" value="<%= typeof formData !== 'undefined' ? formData.phone : '' %>">
+              
+              <input type="hidden" name="countryCode" id="verifiedCountryCode" value="+91">
+              
               <label for="userType">User Type</label>
-              <select id="userType" name="userType"  required onchange="displayLeadAccess()">
+              <select id="userType" name="userType" required onchange="displayLeadAccess()">
                 <option value="">Select user type</option>
                 <% if (userType === 'admin') { %>
-                <option value="admin">Admin</option>
-                <option value="hr">HR</option>
+                  <option value="admin" <%= typeof formData !== 'undefined' && formData.userType === 'admin' ? 'selected' : '' %>>Admin</option>
+                  <option value="hr" <%= typeof formData !== 'undefined' && formData.userType === 'hr' ? 'selected' : '' %>>HR</option>
                 <% } %>
-                <option value="agent">Agent</option>
-                <option value="blog writer">Blog Writer</option>
-                <option value="partner">Partner</option>
+                <option value="agent" <%= typeof formData !== 'undefined' && formData.userType === 'agent' ? 'selected' : '' %>>Agent</option>
+                <option value="blog writer" <%= typeof formData !== 'undefined' && formData.userType === 'blog writer' ? 'selected' : '' %>>Blog Writer</option>
+                <option value="partner" <%= typeof formData !== 'undefined' && formData.userType === 'partner' ? 'selected' : '' %>>Partner</option>
               </select>
+              
               <label id="lb" for="leadAccess" style="display: none;">Lead Access</label>
-              <div id="leadAccess"  style="display: none;">
-                <input type="checkbox" id="creditcard" name="leadAccess" value="creditcard">
+              <div id="leadAccess" style="display: none;">
+                <input type="checkbox" id="creditcard" name="leadAccess" value="creditcard" <%= typeof formData !== 'undefined' && formData.leadAccess && formData.leadAccess.includes('creditcard') ? 'checked' : '' %>>
                 <label for="creditcard">Credit Card</label>
-                <input type="checkbox" id="personalloan" name="leadAccess" value="personalloan">
+                <input type="checkbox" id="personalloan" name="leadAccess" value="personalloan" <%= typeof formData !== 'undefined' && formData.leadAccess && formData.leadAccess.includes('personalloan') ? 'checked' : '' %>>
                 <label for="personalloan">Personal Loan</label>
-                <input type="checkbox" id="microloan" name="leadAccess" value="microloan">
+                <input type="checkbox" id="microloan" name="leadAccess" value="microloan" <%= typeof formData !== 'undefined' && formData.leadAccess && formData.leadAccess.includes('microloan') ? 'checked' : '' %>>
                 <label for="microloan">Micro Loan</label>
-                <input type="checkbox" id="businessloan" name="leadAccess" value="businessloan">
+                <input type="checkbox" id="businessloan" name="leadAccess" value="businessloan" <%= typeof formData !== 'undefined' && formData.leadAccess && formData.leadAccess.includes('businessloan') ? 'checked' : '' %>>
                 <label for="businessloan">Business Loan</label>
-                <input type="checkbox" id="homeloan" name="leadAccess" value="homeloan">
+                <input type="checkbox" id="homeloan" name="leadAccess" value="homeloan" <%= typeof formData !== 'undefined' && formData.leadAccess && formData.leadAccess.includes('homeloan') ? 'checked' : '' %>>
                 <label for="homeloan">Home Loan</label>
-                <!-- <input type="checkbox" id="insurance" name="leadAccess" value="insurance">
-                <label for="insurance">Insurance</label> -->
-                <!-- Add more checkboxes as needed -->
               </div>
+              
               <button type="submit">Create User</button>
             </form>
           </div>

@@ -1,28 +1,77 @@
 const User = require('../models/User');
 
+// exports.createUser = async (req, res) => {
+//   // Check if user is logged in
+//   if (!req.session.user) {
+//     return res.redirect('/auth/login');
+//   }
+//   const { username, password, userType, leadAccess,phone,countryCode } = req.body;
+//   try {
+
+//     // Check if a user with the provided username already exists
+//     const existingUsername = await User.findOne({ username });
+//     if (existingUsername) {
+//       return res.status(400).json({
+//         status: 'error',
+//         message: 'Username already exists'
+//       });
+//     }
+
+//     // Check if a user with the provided phone number already exists
+//     const existingPhone = await User.findOne({ phone, countryCode });
+//     if (existingPhone) {
+//       return res.status(400).json({
+//         status: 'error',
+//         message: 'Phone number already exists'
+//       });
+//     }
+    
+//     const user = await User.create({ username, password, userType, leadAccess ,phone,countryCode});
+//     res.redirect('/dashboard/management');
+//   } catch (err) {
+//     res.status(400).json({
+//       status: 'error',
+//       message: err.message
+//     });
+//   }
+// };
+
+
 exports.createUser = async (req, res) => {
-  // Check if user is logged in
   if (!req.session.user) {
     return res.redirect('/auth/login');
   }
-  const { username, password, userType, leadAccess } = req.body;
+  const { username, password, userType, leadAccess, phone, countryCode } = req.body;
   try {
-    const existingUser = await User.findOne({ username });
-    if (existingUser) {
-      return res.status(400).json({
-        status: 'error',
-        message: 'Username already exists'
+    const existingUsername = await User.findOne({ username });
+    if (existingUsername) {
+      return res.render('createmanagement', { 
+        error: 'Username already exists',
+        formData: req.body,
+        userType:req.session.user.userType  // Pass back the form data
       });
     }
-    const user = await User.create({ username, password, userType, leadAccess });
+
+    const existingPhone = await User.findOne({ phone, countryCode });
+    if (existingPhone) {
+      return res.render('createmanagement', { 
+        error: 'Phone number already exists',
+        formData: req.body,
+        userType:req.session.user.userType  // Pass back the form data
+      });
+    }
+
+    const user = await User.create({ username, password, userType, leadAccess, phone, countryCode });
     res.redirect('/dashboard/management');
   } catch (err) {
-    res.status(400).json({
-      status: 'error',
-      message: err.message
+    res.render('createmanagement', { 
+      error: err.message,
+      formData: req.body,
+      userType:req.session.user.userType  // Pass back the form data
     });
   }
 };
+
 
 exports.getUsers = async (req, res) => {
   // Check if user is logged in
