@@ -468,6 +468,21 @@ body {
 #homeloan {
   background-color: #fadbd8;
 }
+#automobileloan {
+  background-color: #d3e9c0;
+}
+#educationloan {
+  background-color: #c0cde9;
+}
+#propertyloan {
+  background-color: #d9c0e9;
+}
+#productloan {
+  background-color: #e9e3c0;
+}
+#serviceloan {
+  background-color: #e9c0ca;
+}
 
 .wrapper-card::before {
   content: "";

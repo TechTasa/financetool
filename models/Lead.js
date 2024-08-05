@@ -14,7 +14,7 @@ const LeadSchema = new mongoose.Schema({
     ref: 'User',
     required: [true, 'No User Logged In'],
     validate: {
-      validator: async function(value) {
+      validator: async function (value) {
         const user = await User.findById(value);
         if (!user || user.userType !== 'customer') {
           throw new Error('Only customers are allowed');
@@ -49,7 +49,7 @@ const LeadSchema = new mongoose.Schema({
   },
   leadType: {
     type: String,
-    enum: ['creditcard', 'personalloan', 'microloan', 'businessloan', 'homeloan','insurance'],
+    enum: ['creditcard', 'personalloan', 'microloan', 'businessloan', 'homeloan', 'automobileloan', 'educationloan', 'propertyloan', 'productloan', 'serviceloan', 'insurance'],
     required: [true, 'Please provide type of lead']
   },
   documents: {
