@@ -1305,10 +1305,7 @@ body {
    z-index: 100;
   }
 
-  .cta {
-    /* padding: 1rem 0.9rem; */
-    color: #303033;
-  }
+ 
 
 .navbar{
   gap: 12px;
