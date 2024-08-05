@@ -157,6 +157,8 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
                   <th scope="col">User Type</th>
                   <th colspan="2" scope="col">Actions</th>
         
@@ -166,6 +168,8 @@
                 <% users.filter(user => user.userType === 'admin').forEach(function(user) { %>
                   <tr>
                     <td><%= user.username %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.phone %></td>
                     <td><%= user.userType %></td>
                     <td >
                       <a href="/dashboard/management/edit/<%= user._id %>" class="btn btn-sm btn-neutral">Edit</a>
@@ -182,6 +186,8 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
                   <th scope="col">User Type</th>
                   <th colspan="2" scope="col">Actions</th>
         
@@ -191,6 +197,8 @@
                 <% users.filter(user => user.userType === 'customer').forEach(function(user) { %>
                   <tr>
                     <td><%= user.username %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.phone %></td>
                     <td><%= user.userType %></td>
                     <td >
                       <a href="/dashboard/management/edit/<%= user._id %>" class="btn btn-sm btn-neutral">Edit</a>
@@ -207,6 +215,8 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
                   <th scope="col">User Type</th>
                   <th scope="col">Lead Access</th>
                   <th colspan="2" scope="col">Actions</th>
@@ -217,6 +227,8 @@
                 <% users.filter(user => user.userType === 'partner').forEach(function(user) { %>
                   <tr>
                     <td><%= user.username %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.phone %></td>
                     <td><%= user.userType %></td>
                     <td><%= user.leadAccess.join(', ') %></td>
                     <td >
@@ -234,6 +246,8 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
                   <th scope="col">User Type</th>
                   <th scope="col">Lead Access</th>
                   <th colspan="2" scope="col">Actions</th>
@@ -244,6 +258,8 @@
                 <% users.filter(user => user.userType === 'agent').forEach(function(user) { %>
                   <tr>
                     <td><%= user.username %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.phone %></td>
                     <td><%= user.userType %></td>
                     <td><%= user.leadAccess.join(', ') %></td>
                     <td >
@@ -261,6 +277,8 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
                   <th scope="col">User Type</th>
                   <th colspan="2" scope="col">Actions</th>
         
@@ -270,6 +288,8 @@
                 <% users.filter(user => user.userType === 'hr').forEach(function(user) { %>
                   <tr>
                     <td><%= user.username %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.phone %></td>
                     <td><%= user.userType %></td>
                     <td >
                       <a href="/dashboard/management/edit/<%= user._id %>" class="btn btn-sm btn-neutral">Edit</a>
@@ -286,6 +306,8 @@
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Username</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
                   <th scope="col">User Type</th>
                   <th colspan="2" scope="col">Actions</th>
         
@@ -295,6 +317,8 @@
                 <% users.filter(user => user.userType === 'blog writer').forEach(function(user) { %>
                   <tr>
                     <td><%= user.username %></td>
+                    <td><%= user.email %></td>
+                    <td><%= user.phone %></td>
                     <td><%= user.userType %></td>
                     <td >
                       <a href="/dashboard/management/edit/<%= user._id %>" class="btn btn-sm btn-neutral">Edit</a>

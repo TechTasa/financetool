@@ -41,14 +41,23 @@ exports.createUser = async (req, res) => {
   if (!req.session.user) {
     return res.redirect('/auth/login');
   }
-  const { username, password, userType, leadAccess, phone, countryCode } = req.body;
+  const { username, email, password, userType, leadAccess, phone, countryCode } = req.body;
   try {
     const existingUsername = await User.findOne({ username });
     if (existingUsername) {
       return res.render('createmanagement', { 
         error: 'Username already exists',
         formData: req.body,
-        userType:req.session.user.userType  // Pass back the form data
+        userType: req.session.user.userType
+      });
+    }
+
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return res.render('createmanagement', { 
+        error: 'Email already exists',
+        formData: req.body,
+        userType: req.session.user.userType
       });
     }
 
@@ -57,17 +66,17 @@ exports.createUser = async (req, res) => {
       return res.render('createmanagement', { 
         error: 'Phone number already exists',
         formData: req.body,
-        userType:req.session.user.userType  // Pass back the form data
+        userType: req.session.user.userType
       });
     }
 
-    const user = await User.create({ username, password, userType, leadAccess, phone, countryCode });
+    const user = await User.create({ username, email, password, userType, leadAccess, phone, countryCode });
     res.redirect('/dashboard/management');
   } catch (err) {
     res.render('createmanagement', { 
       error: err.message,
       formData: req.body,
-      userType:req.session.user.userType  // Pass back the form data
+      userType: req.session.user.userType
     });
   }
 };
@@ -104,6 +113,8 @@ exports.editUser = async (req, res) => {
       return res.status(404).send('User not found');
     }
     const userType=req.session.user.userType
+    console.log(user);
+    
     res.render('editmanagement', { user: user ,userType});
   } catch (err) {
     res.status(500).send(err.message);
@@ -120,14 +131,33 @@ exports.updateUser = async (req, res) => {
     if (!user) {
       return res.status(404).send('User not found');
     }
+
+    // Check if the new email already exists for another user
+    if (req.body.email !== user.email) {
+      const existingEmail = await User.findOne({ email: req.body.email, _id: { $ne: user._id } });
+      if (existingEmail) {
+        return res.status(400).send('Email already exists for another user');
+      }
+    }
+
+    // Update user fields
+    user.username = req.body.username;
+    user.email = req.body.email;
+
+    // Only update password if a new one is provided
+    if (req.body.password && req.body.password !== user.password) {
+      user.password = req.body.password;
+    }
+
     // Check if leadAccess checkboxes are present in the request body
     if (req.body.leadAccess) {
       // If present, update the leadAccess array
-      user.leadAccess = req.body.leadAccess;
+      user.leadAccess = Array.isArray(req.body.leadAccess) ? req.body.leadAccess : [req.body.leadAccess];
     } else {
       // If not present, reset the leadAccess array to empty
       user.leadAccess = [];
     }
+
     // Update the user document
     await user.save();
     res.redirect('/dashboard/management');
@@ -135,6 +165,7 @@ exports.updateUser = async (req, res) => {
     res.status(500).send(err.message);
   }
 };
+
 exports.deleteUser = async (req, res) => {
   // Check if user is logged in
   if (!req.session.user) {

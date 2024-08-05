@@ -2,14 +2,14 @@ const User = require('../models/User');
 const https = require('https');
 
 exports.signup = async (req, res) => {
-  const { username, password, userType, phone, countryCode } = req.body;
+  const { username, email, password, userType, phone, countryCode } = req.body;
   try {
-    // Check if a user with the provided username already exists
-    const existingUser = await User.findOne({ username });
+    // Check if a user with the provided username or email already exists
+    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
       return res.status(400).json({
         status: 'error',
-        message: 'Username already exists'
+        message: 'Username or email already exists'
       });
     }
     // Check if a user with the provided phone number already exists
@@ -21,7 +21,7 @@ exports.signup = async (req, res) => {
       });
     }
     // Create a new user
-    const user = await User.create({ username, password, userType, phone, countryCode });
+    const user = await User.create({ username, email, password, userType, phone, countryCode });
     req.session.user = user;
     res.redirect('/');
   } catch (err) {
@@ -63,9 +63,17 @@ exports.verifyPhone = (req, res) => {
 };
 
 exports.login = async (req, res) => {
-  const { username, password } = req.body;
+  const { usernameOrEmail, password } = req.body;
   try {
-    const user = await User.findOne({ username });
+    // Find user by username, email, or phone
+    const user = await User.findOne({
+      $or: [
+        { username: usernameOrEmail },
+        { email: usernameOrEmail },
+        { phone: usernameOrEmail }
+      ]
+    });
+
     if (!user) {
       return res.status(404).json({
         status: 'error',
@@ -76,7 +84,7 @@ exports.login = async (req, res) => {
     if (!isCorrect) {
       return res.status(400).json({
         status: 'error',
-        message: 'Incorrect username or password'
+        message: 'Incorrect username/email/phone or password'
       });
     }
     req.session.user = user;

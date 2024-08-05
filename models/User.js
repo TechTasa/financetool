@@ -10,6 +10,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please provide password']
   },
+  email: {
+    type: String,
+    required: [true, 'Please provide email'],
+    unique: true,
+    match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
+  },
   userType: {
     type: String,
     enum: ['admin', 'agent', 'hr', 'blog writer', 'partner', 'customer'],

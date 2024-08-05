@@ -19,7 +19,7 @@
     max-width: 400px;
   }
   
-  input[type="text"], input[type="password"], select {
+  input[type="text"], input[type="password"],input[type="email"], select {
     padding: 0.5rem;
     border-radius: 0.25rem;
     border: 1px solid #ddd;
@@ -158,8 +158,12 @@
             <form action="/dashboard/management/edit/<%= user._id %>" method="POST">
               <label for="username">User Name</label>
               <input type="text" name="username" placeholder="Username" value="<%= user.username %>" required>
+              <label for="email">Email</label>
+              <input type="email" name="email" placeholder="Email" value="<%= user.email %>" required>
               <label for="password">Password</label>
               <input type="password" name="password" placeholder="Password" value="<%= user.password %>" required>
+              <input type="hidden" name="phone" placeholder="phone" value="<%= user.phone %>" required>
+              <input type="hidden" name="countryCode" placeholder="countryCode" value="+91" required>
               <% if (user.userType === 'agent' || user.userType === 'partner') { %>
               <div id="leadAccess">
                 <input type="checkbox" id="creditcard" name="leadAccess" value="creditcard" <%= user.leadAccess.includes('creditcard') ? 'checked' : '' %>>

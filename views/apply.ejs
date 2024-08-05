@@ -32,12 +32,13 @@
     }
 
     .modal {
+      z-index: 1000;
       display: flex;
       justify-content: center;
       align-items: center;
       position: fixed;
       top: 0;
-      left: 0;
+      left: 0;  
       width: 100%;
       height: 100%;
       background-color: rgba(0, 0, 0, 0.5);
@@ -82,7 +83,8 @@
     }
 
     input[type="text"],
-    input[type="password"] {
+    input[type="password"], 
+    input[type="email"] {
       width: 100%;
       padding: 12px;
       margin-bottom: 16px;
@@ -141,15 +143,16 @@
         </div>
         <div id="loginForm">
           <form action="/auth/login" method="POST">
-            <input type="text" name="username" placeholder="TechTasa ID" required>
+            <input type="text" name="usernameOrEmail" placeholder="TechTasa ID, Phone or Email" required>
             <input type="password" name="password" placeholder="Password" required>
             <button type="submit" class="submit-button">Sign In</button>
           </form>
-          <a href="#" class="forgot-link">Forgot TechTasa ID or password?</a>
+          <!-- <a href="#" class="forgot-link">Forgot TechTasa ID or password?</a> -->
         </div>
         <div id="registerForm" style="display:none;">
           <form id="signupForm" action="/auth/signup" method="POST">
             <input type="text" name="username" placeholder="TechTasa ID" required>
+            <input type="email" name="email" placeholder="Email" required>
             <input type="password" name="password" placeholder="Password" required>
             <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
             <input type="hidden" name="userType" value="customer">
@@ -178,8 +181,9 @@
             const username = form.username.value;
             const password = form.password.value;
             const confirmPassword = form.confirmPassword.value;
+            const email = form.email.value;
 
-            if (!username || !password || !confirmPassword) {
+            if (!username || !password || !confirmPassword || !email) {
               event.preventDefault();
               event.stopPropagation();
               alert('Please fill in all required fields before verifying your phone number.');

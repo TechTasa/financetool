@@ -171,15 +171,35 @@ hr {
   border-bottom: 2px solid #043a7a;
 }
 
-.cta {
-  padding: 0.6rem 1.5rem;
-  background-color: white;
-  color: #043a7a;
-  border: 1px solid #043a7a;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 500;
+.cta-container {
+  display: flex;
+  gap: 10px;
 }
+
+.cta {
+  padding: 8px 16px;
+  background-color: #0066CC;
+  color: white;
+  border: none;
+  border-radius: 980px;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cta:hover {
+  background-color: #0077ED;
+}
+
+.logout {
+  background-color: #ff3b30;
+}
+
+.logout:hover {
+  background-color: #ff453a;
+}
+
 .logout{
   background-color: red;
   color: #ffffff;
@@ -1271,8 +1291,8 @@ body {
   }
 
   .cta {
-    padding: 1rem 0.9rem;
-    
+    /* padding: 1rem 0.9rem; */
+    color: #303033;
   }
 
 .navbar{
