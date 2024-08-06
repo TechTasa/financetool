@@ -137,7 +137,8 @@ exports.dashboardOverview = async (req, res) => {
       doneToday, 
       rejectedToday, 
       onHoldToday, 
-      userType: req.session.user.userType 
+      userType: req.session.user.userType,
+      userName:req.session.user.username
     });
   } catch (err) {
     res.status(500).json({
