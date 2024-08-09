@@ -2,20 +2,103 @@
 <html>
 <head>
   <title>Sign Up</title>
-  <link rel="stylesheet" type="text/css" href="/css/signup.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="/css/login.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/css/signup.css"> -->
+  <style>
+    #phoneVerificationContainer {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+
+    .pe_signin_button {
+      width: 100%;
+      /* Add any specific styles for the phone verification button here */
+    }
+  </style>
 </head>
 <body>
-  <h1>Sign Up</h1>
-  <form action="/auth/signup" method="POST">
-    <input type="text" name="username" placeholder="Username" required>
-    <input type="password" name="password" placeholder="Password" required>
-    <select name="userType" required>
-      <option value="">Select user type</option>
-      <option value="admin">Admin</option>
-      <option value="agent">Agent</option>
-      <option value="hr">HR</option>
-    </select>
-    <button type="submit">Sign Up</button>
-  </form>
-</body>
+  <div class="container">
+    <div id="registerForm" class="card">
+      <form id="signupForm" action="/auth/signup" method="POST">
+        <a href="/"><img src="/images/XpertRupees_Logo.svg" alt=""></a>
+        <input type="text" name="username" placeholder="TechTasa ID" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
+        <input type="hidden" name="userType" value="customer">
+        <input type="hidden" name="phone" id="verifiedPhone">
+        <input type="hidden" name="countryCode" id="verifiedCountryCode">
+        <div id="phoneVerificationContainer">
+          <div class="pe_signin_button" data-client-id="18437036855414457333"></div>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    function loadScript() {
+      const script = document.createElement('script');
+      script.src = 'https://www.phone.email/sign_in_button_v1.js';
+      script.async = true;
+
+      script.onload = function () {
+        const container = document.getElementById('phoneVerificationContainer');
+
+        // Add click event listener to the container
+        container.addEventListener('click', function (event) {
+          const form = document.getElementById('signupForm');
+          const username = form.username.value;
+          const password = form.password.value;
+          const confirmPassword = form.confirmPassword.value;
+          const email = form.email.value;
+
+          if (!username || !password || !confirmPassword || !email) {
+            event.preventDefault();
+            event.stopPropagation();
+            alert('Please fill in all required fields before verifying your phone number.');
+            return false;
+          }
+
+          if (password !== confirmPassword) {
+            event.preventDefault();
+            event.stopPropagation();
+            alert('Passwords do not match.');
+            return false;
+          }
+        }, true);  // Use capture phase to intercept the click before the button's own listener
+      }
+
+      document.body.appendChild(script);
+
+      window.phoneEmailListener = (userObj) => {
+        const { user_json_url } = userObj;
+        fetch('/auth/verify-phone', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ user_json_url }),
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              document.getElementById('verifiedPhone').value = data.phone;
+              document.getElementById('verifiedCountryCode').value = data.countryCode;
+              // alert('Phone verification successful! The form will now be submitted.');
+              document.getElementById('signupForm').submit();
+            } else {
+              alert('Phone verification failed. Please try again.');
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred during phone verification.');
+          });
+      };
+    }
+
+    document.addEventListener('DOMContentLoaded', loadScript);
+  </script>
+</body> 
 </html>

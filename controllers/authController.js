@@ -62,17 +62,26 @@ exports.verifyPhone = (req, res) => {
   });
 };
 
+
 exports.login = async (req, res) => {
-  const { usernameOrEmail, password } = req.body;
+  const { usernameOrEmail, password, phone } = req.body;
+  
   try {
-    // Find user by username, email, or phone
-    const user = await User.findOne({
-      $or: [
-        { username: usernameOrEmail },
-        { email: usernameOrEmail },
-        { phone: usernameOrEmail }
-      ]
-    });
+    let user;
+    
+    if (phone) {
+      // If phone is provided, find user by phone
+      user = await User.findOne({ phone: phone });
+    } else {
+      // Find user by username, email, or phone
+      user = await User.findOne({
+        $or: [
+          { username: usernameOrEmail },
+          { email: usernameOrEmail },
+          { phone: usernameOrEmail }
+        ]
+      });
+    }
 
     if (!user) {
       return res.status(404).json({
@@ -80,6 +89,13 @@ exports.login = async (req, res) => {
         message: 'User not found'
       });
     }
+    
+    if (phone) {
+      // If phone is provided, we assume OTP verification has already been done
+      req.session.user = user;
+      return res.redirect('/');
+    }
+    
     const isCorrect = await user.checkPassword(password);
     if (!isCorrect) {
       return res.status(400).json({
@@ -87,8 +103,9 @@ exports.login = async (req, res) => {
         message: 'Incorrect username/email/phone or password'
       });
     }
+    
     req.session.user = user;
-    res.redirect('/')
+    res.redirect('/');
   } catch (err) {
     res.status(400).json({
       status: 'error',
@@ -96,3 +113,40 @@ exports.login = async (req, res) => {
     });
   }
 };
+
+// exports.login = async (req, res) => {
+//   const { usernameOrEmail, password } = req.body;
+//   try {
+//     // Find user by username, email, or phone
+//     const user = await User.findOne({
+//       $or: [
+//         { username: usernameOrEmail },
+//         { email: usernameOrEmail },
+//         { phone: usernameOrEmail }
+//       ]
+//     });
+
+//     if (!user) {
+//       return res.status(404).json({
+//         status: 'error',
+//         message: 'User not found'
+//       });
+//     }
+//     const isCorrect = await user.checkPassword(password);
+//     if (!isCorrect) {
+//       return res.status(400).json({
+//         status: 'error',
+//         message: 'Incorrect username/email/phone or password'
+//       });
+//     }
+//     req.session.user = user;
+//     res.redirect('/')
+//   } catch (err) {
+//     res.status(400).json({
+//       status: 'error',
+//       message: err.message
+//     });
+//   }
+// };
+
+

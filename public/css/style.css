@@ -205,6 +205,15 @@ hr {
   color: #ffffff;
   border: none;
 }
+.join{
+  background-color: rgb(111, 179, 91);
+  color: #ffffff;
+  border: none;
+}
+.join:hover {
+  background-color: rgb(139, 206, 119);
+} 
+
 .focus {
   display: flex;
   justify-content: center;
