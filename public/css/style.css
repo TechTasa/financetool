@@ -137,18 +137,20 @@ hr {
 
 .navbar {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  width: auto;
+  width: 100%;
   padding: 0.8rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.align{
-  margin-inline: auto;
-}
+
 .links {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
 .link {
@@ -202,11 +204,6 @@ hr {
   background-color: #ff453a;
 }
 
-.logout{
-  background-color: red;
-  color: #ffffff;
-  border: none;
-}
 .join{
   background-color: rgb(111, 179, 91);
   color: #ffffff;
