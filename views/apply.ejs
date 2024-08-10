@@ -131,13 +131,15 @@
     .alreadyAccount{
       text-decoration: none;
     }
-    .loginLink{
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    .loginLink {
       text-align: center;
-      color: white;
-      margin-top: 16px;
+      margin-top: 20px;
+    }
+
+    .alreadyAccount {
+      color: #0066CC;
+      text-decoration: none;
+      font-size: 14px;
     }
   </style>
 
@@ -174,7 +176,7 @@
             </div>
           </form>
           <div class="loginLink">
-            <a href="/auth/login" class="alreadyAccount cta">Already have an account?</a>
+            <a href="/auth/login" class="alreadyAccount">Already a member? <b>Login</b></a>
           </div>
         </div>
       </div>
@@ -229,7 +231,7 @@
               if (data.success) {
                 document.getElementById('verifiedPhone').value = data.phone;
                 document.getElementById('verifiedCountryCode').value = data.countryCode;
-                console.log(data);
+                
                 
                 // alert('Phone verification successful! The form will now be submitted.');
                 document.getElementById('signupForm').submit();
