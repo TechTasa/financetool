@@ -137,12 +137,14 @@ hr {
 
 .navbar {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
   align-items: center;
   width: auto;
   padding: 0.8rem;
 }
-
+.align{
+  margin-inline: auto;
+}
 .links {
   display: flex;
   align-items: center;

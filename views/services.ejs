@@ -13,7 +13,7 @@
 </head>
 
 <body>
-  <nav class="navbar">
+  <nav class="navbar align">
     <div id="menu"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#1b1dc7" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <line x1="4" y1="6" x2="20" y2="6" />
@@ -28,11 +28,15 @@
       <li class=" link "><a href="/blog">Blog</a></li>
       <li class=" link"><a href="/contact">Contact</a></li>
     </ul>
-    <% if (loggedin) { %>
-    <button class="cta" onClick='location="/dashboard"'>Dashboard</button>
-    <% } else { %>
-    <button class="cta" onClick='location="/auth/login"'>Sign In</button>
-    <% } %>
+    <div class="cta-container">
+      <% if (loggedin) { %>
+          <button class="cta" onClick='location.href="/dashboard"'>Dashboard</button>
+          <button class="cta logout" onClick='location.href="/auth/logout"'>Logout</button>
+      <% } else { %>
+          <button class="cta" onClick='location.href="/auth/login"'>Login</button>
+          <button class="cta join" onClick='location.href="/auth/signup"'>Sign Up</button>
+      <% } %>
+  </div>
   </nav>
   <div class="services">
     <div class="container">

@@ -128,6 +128,17 @@
       width: 100%;
       /* Add any specific styles for the phone verification button here */
     }
+    .alreadyAccount{
+      text-decoration: none;
+    }
+    .loginLink{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      margin-top: 16px;
+    }
   </style>
 
 </head>
@@ -136,12 +147,12 @@
   <% if (!loggedin) { %>
     <div id="loginModal" class="modal">
       <div class="modal-content">
-        <h2>Sign In or Create an Account</h2>
+        <h2>Create an Account</h2>
         <div class="button-group">
-          <button onclick="showLoginForm()" class="toggle-button active">Sign In</button>
-          <button onclick="showRegisterForm()" class="toggle-button">Create Account</button>
+          <!-- <button onclick="showLoginForm()" class="toggle-button active">Already have an account?</button> -->
+          <!-- <button onclick="showRegisterForm()" class="toggle-button">Create Account</button> -->
         </div>
-        <div id="loginForm">
+        <div id="loginForm" style="display:none;">
           <form action="/auth/login" method="POST">
             <input type="text" name="usernameOrEmail" placeholder="TechTasa ID, Phone or Email" required>
             <input type="password" name="password" placeholder="Password" required>
@@ -149,7 +160,7 @@
           </form>
           <!-- <a href="#" class="forgot-link">Forgot TechTasa ID or password?</a> -->
         </div>
-        <div id="registerForm" style="display:none;">
+        <div id="registerForm" >
           <form id="signupForm" action="/auth/signup" method="POST">
             <input type="text" name="username" placeholder="TechTasa ID" required>
             <input type="email" name="email" placeholder="Email" required>
@@ -162,6 +173,9 @@
               <div class="pe_signin_button" data-client-id="18437036855414457333"></div>
             </div>
           </form>
+          <div class="loginLink">
+            <a href="/auth/login" class="alreadyAccount cta">Already have an account?</a>
+          </div>
         </div>
       </div>
     </div>
@@ -250,11 +264,15 @@
         </ul>
 
 
-        <% if (loggedin) { %>
-          <button class="cta" onClick='location="/dashboard"'>Dashboard</button>
+        <div class="cta-container">
+          <% if (loggedin) { %>
+              <button class="cta" onClick='location.href="/dashboard"'>Dashboard</button>
+              <button class="cta logout" onClick='location.href="/auth/logout"'>Logout</button>
           <% } else { %>
-            <button class="cta" onClick='location="/auth/login"'>Sign In</button>
-            <% } %>
+              <button class="cta" onClick='location.href="/auth/login"'>Login</button>
+              <button class="cta join" onClick='location.href="/auth/signup"'>Sign Up</button>
+          <% } %>
+      </div>
 
       </nav>
       <div class="container">
