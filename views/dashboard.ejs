@@ -5,16 +5,96 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <style>
-  /* Webpixels CSS */
-  /* Utility and component-centric Design System based on Bootstrap for fast, responsive UI development */
-  /* URL: https://github.com/webpixels/css */
-
-  @import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css);
-
-  /* Bootstrap Icons */
+  @import url("https://unpkg.com/@webpixels/css@1.1.5/dist/index.css");
   @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
+  
+  :root {
+            --primary-color: #007AFF;
+            --secondary-color: #5AC8FA;
+            --background-color: #F2F2F7;
+            --card-background: #FFFFFF;
+            --text-color: #1C1C1E;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0px;
+        }
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .widget {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .widget-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .widget-content {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .big-number {
+            font-size: 36px;
+            font-weight: 300;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #E5E5EA;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background-color: var(--primary-color);
+        }
+        .mini-chart {
+            width: 100%;
+            height: 60px;
+        }
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .status-item {
+            text-align: center;
+        }
+        .status-number {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .status-label {
+            font-size: 12px;
+            color: #8E8E93;
+        }
+        .status-today {
+            font-size: 14px;
+            color: var(--secondary-color);
+            font-weight: 500;
+        }
+        .lead-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
 </style>
 
 <body>
@@ -23,19 +103,19 @@
       class="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg"
       id="navbarVertical">
       <div class="container-fluid">
-        <!-- Toggler -->
+
         <button class="navbar-toggler ms-n2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse"
           aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <!-- Brand -->
+
         <a class="navbar-brand py-lg-2 mb-lg-5 px-lg-6 me-0" href="/">
           <img src="/images/XpertRupees_Logo.svg" alt="...">
         </a>
 
-        <!-- Collapse -->
+
         <div class="collapse navbar-collapse" id="sidebarCollapse">
-          <!-- Navigation -->
+
 
           <ul class="navbar-nav">
             <li class="nav-item">
@@ -80,15 +160,9 @@
                               </li>
                               <% } %>
           </ul>
-          <!-- Divider -->
           <hr class="navbar-divider my-5 opacity-20">
-          <!-- Navigation -->
-
-          <!-- Push content down -->
           <div class="mt-auto"></div>
-          <!-- User (md) -->
           <ul class="navbar-nav">
-
             <li class="nav-item">
               <a class="nav-link" href="/auth/logout">
                 <i class="bi bi-box-arrow-left"></i> Logout
@@ -98,15 +172,12 @@
         </div>
       </div>
     </nav>
-    <!-- Main content -->
     <div class="h-screen flex-grow-1 overflow-y-lg-auto">
-      <!-- Header -->
       <header class="bg-surface-primary border-bottom pt-6">
         <div class="container-fluid">
           <div class="mb-npx">
             <div class="row align-items-center">
               <div class="col-sm-6 col-12 mb-4 mb-sm-0">
-                <!-- Title -->
                 <h1 class="h1 mb-0 ls-tight">Overview</h1>
 
               </div>
@@ -114,13 +185,10 @@
           </div>
         </div>
       </header>
-      <!-- Main -->
       <main class="py-6 bg-surface-secondary">
         <div class="container-fluid">
-
           <div class="row g-6 mb-6">
-
-            <div class="col-xl-3 col-sm-6 col-12">
+            <!-- <div class="col-xl-3 col-sm-6 col-12">
               <div class="card shadow border-0">
                 <div class="card-body">
                   <div class="row">
@@ -142,283 +210,55 @@
                   </div>
                 </div>
               </div>
+            </div> -->
+
+            <% if (userType=="admin" || userType=="agent" ) { %>
+              <!-- here -->
+              <h1>Welcome, <%= userName %></h1>
+    <div class="dashboard">
+        <div class="widget">
+            <div class="widget-title">Total Leads</div>
+            <div class="widget-content">
+                <div class="big-number"><%= totalLeads %></div>
             </div>
-
-            <% if (userType=="admin" || userType=="agent") { %>
-              <div class="col-xl-3 col-sm-6 col-12">
-                <div class="card shadow border-0">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Leads
-                          Today</span>
-                        <span class="h3 font-bold mb-0">
-                          <%= todayLeads %>
-                        </span>
-                      </div>
-                      <div class="col-auto">
-                        <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
-                          <i class="bi bi-credit-card"></i>
-                        </div>
-                      </div>
+            <div class="widget-title">Today's Leads</div>
+            <div class="progress-bar">
+                <div class="progress-bar-fill" style="width: <%= (todayLeads / totalLeads) * 100 %>%;"></div>
+            </div>
+            <div class="widget-content">
+                <div class="big-number"><%= todayLeads %></div>
+            </div>
+        </div>
+        
+        <div class="widget">
+            <div class="widget-title">Lead Types Distribution</div>
+            <div class="lead-types-grid">
+                <% for (let type in leadTypeCounts) { %>
+                    <div class="status-item">
+                        <div class="status-number"><%= leadTypeCounts[type].allTime %></div>
+                        <div class="status-today">Today: <%= leadTypeCounts[type].today %></div>
+                        <div class="status-label"><%= type.charAt(0).toUpperCase() + type.slice(1) %></div>
                     </div>
-                    <div class="mt-2 mb-0 text-sm">
-                      <span class="badge badge-pill bg-soft-success text-success me-2">
-                       
-                      </span>
-                      <span class="text-nowrap text-xs text-muted">Since Yesterday</span>
+                <% } %>
+            </div>
+        </div>
+        
+        <div class="widget">
+            <div class="widget-title">Lead Status</div>
+            <div class="status-grid">
+                <% for (let status in statusCounts) { %>
+                    <div class="status-item">
+                        <div class="status-number"><%= statusCounts[status].allTime %></div>
+                        <div class="status-today">Today: <%= statusCounts[status].today %></div>
+                        <div class="status-label"><%= status.charAt(0).toUpperCase() + status.slice(1).replace('_', ' ') %></div>
                     </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="col-xl-3 col-sm-6 col-12">
-                <div class="card shadow border-0">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Total
-                          Leads</span>
-                        <span class="h3 font-bold mb-0">
-                          <%= totalLeads %>
-                        </span>
-                      </div>
-                      <div class="col-auto">
-                        <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
-                          <i class="bi bi-people"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mt-2 mb-0 text-sm">
-                      <span class="badge badge-pill bg-soft-success text-success me-2">
-                      
-                      </span>
-                      <span class="text-nowrap text-xs text-muted">Since last month</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="col-xl-3 col-sm-6 col-12">
-                <div class="card shadow border-0">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Personal Loan
-                          (All Time)</span>
-                        <span class="h3 font-bold mb-0">
-                          <%= personalLoanAllTime %>
-                        </span>
-                      </div>
-                      <div class="col-auto">
-                        <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
-                          <i class="bi bi-credit-card"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mt-2 mb-0 text-sm">
-                      <span class="badge badge-pill bg-soft-success text-success me-2">
-                       
-                      </span>
-                      <span class="text-nowrap text-xs text-muted">Since last month</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="col-xl-3 col-sm-6 col-12">
-                <div class="card shadow border-0">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Credit Card
-                          (All Time)</span>
-                        <span class="h3 font-bold mb-0">
-                          <%= creditCardAllTime %>
-                        </span>
-                      </div>
-                      <div class="col-auto">
-                        <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
-                          <i class="bi bi-credit-card"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mt-2 mb-0 text-sm">
-                      <span class="badge badge-pill bg-soft-success text-success me-2">
-                       
-                      </span>
-                      <span class="text-nowrap text-xs text-muted">Since last month</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="col-xl-3 col-sm-6 col-12">
-                <div class="card shadow border-0">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Personal Loan
-                          (Today)</span>
-                        <span class="h3 font-bold mb-0">
-                          <%= personalLoanToday %>
-                        </span>
-                      </div>
-                      <div class="col-auto">
-                        <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
-                          <i class="bi bi-credit-card"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mt-2 mb-0 text-sm">
-                      <span class="badge badge-pill bg-soft-success text-success me-2">
-                       
-                      </span>
-                      <span class="text-nowrap text-xs text-muted">Since yesterday</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="col-xl-3 col-sm-6 col-12">
-                <div class="card shadow border-0">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Credit Card
-                          (Today)</span>
-                        <span class="h3 font-bold mb-0">
-                          <%= creditCardToday %>
-                        </span>
-                      </div>
-                      <div class="col-auto">
-                        <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
-                          <i class="bi bi-credit-card"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mt-2 mb-0 text-sm">
-                      <span class="badge badge-pill bg-soft-success text-success me-2">
-                       
-                      </span>
-                      <span class="text-nowrap text-xs text-muted">Since yesterday</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            
-              <div class="col-xl-3 col-sm-6 col-12">
-                <div class="card shadow border-0">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Pending (All
-                          Time)</span>
-                        <span class="h3 font-bold mb-0">
-                          <%= pendingAllTime %>
-                        </span>
-                      </div>
-                      <div class="col-auto">
-                        <div class="icon icon-shape bg-warning text-white text-lg rounded-circle">
-                          <i class="bi bi-hourglass"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mt-2 mb-0 text-sm">
-                      <span class="badge badge-pill bg-soft-success text-success me-2">
-                       
-                      </span>
-                      <span class="text-nowrap text-xs text-muted">Since last month</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="col-xl-3 col-sm-6 col-12">
-                <div class="card shadow border-0">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">In Progress
-                          (All Time)</span>
-                        <span class="h3 font-bold mb-0">
-                          <%= inProgressAllTime %>
-                        </span>
-                      </div>
-                      <div class="col-auto">
-                        <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
-                          <i class="bi bi-arrow-right-circle"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mt-2 mb-0 text-sm">
-                      <span class="badge badge-pill bg-soft-success text-success me-2">
-                      
-                      </span>
-                      <span class="text-nowrap text-xs text-muted">Since last month</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="col-xl-3 col-sm-6 col-12">
-                <div class="card shadow border-0">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">Pending
-                          (Today)</span>
-                        <span class="h3 font-bold mb-0">
-                          <%= pendingToday %>
-                        </span>
-                      </div>
-                      <div class="col-auto">
-                        <div class="icon icon-shape bg-warning text-white text-lg rounded-circle">
-                          <i class="bi bi-hourglass"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mt-2 mb-0 text-sm">
-                      <span class="badge badge-pill bg-soft-success text-success me-2">
-                       
-                      </span>
-                      <span class="text-nowrap text-xs text-muted">Since yesterday</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-  
-              <div class="col-xl-3 col-sm-6 col-12">
-                <div class="card shadow border-0">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col">
-                        <span class="h6 font-semibold text-muted text-sm d-block mb-2">In Progress
-                          (Today)</span>
-                        <span class="h3 font-bold mb-0">
-                          <%= inProgressToday %>
-                        </span>
-                      </div>
-                      <div class="col-auto">
-                        <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
-                          <i class="bi bi-arrow-right-circle"></i>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="mt-2 mb-0 text-sm">
-                      <span class="badge badge-pill bg-soft-success text-success me-2">
-                      
-                      </span>
-                      <span class="text-nowrap text-xs text-muted">Since yesterday</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+              <% } %>
 
 
-            <% } %>
-            
-            
       </main>
     </div>
 
