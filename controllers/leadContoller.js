@@ -54,37 +54,70 @@ exports.applyLoan = async (req, res) => {
       userId, // Associate the lead with the user
       documents: fileFields,
     });
-    res.status(201).send(`<html>
-      <style>
-      .lottie-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
+    res.status(201).send(`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+     <style>
+        *{
+            margin: 0;padding: 0;box-sizing: border-box;
+        }
+        /* From Uiverse.io by satyamchaudharydev */ 
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+        }
+.loader {
+  display: block;
+  --height-of-loader: 4px;
+  --loader-color: #0071e2;
+  width: 130px;
+  height: var(--height-of-loader);
+  border-radius: 30px;
+  background-color: rgba(0,0,0,0.2);
+  position: relative;
 }
 
-.lottie-container iframe {
-  border: none;
-  min-width: 100%;
-  min-height: 100%;
+.loader::before {
+  content: "";
+  position: absolute;
+  background: var(--loader-color);
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  border-radius: 30px;
+  animation: moving 1s ease-in-out infinite;
+  ;
 }
-      </style>
-      <body>
-      <div class="lottie-container">
-  <iframe src="https://lottie.host/embed/d5630544-dfa8-4446-8267-03cbe4716a42/1kUQ9782wM.json"></iframe>
-</div>
-        <script>
+
+@keyframes moving {
+  50% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0;
+    right: 0;
+    left: unset;
+  }
+}
+    </style>
+</head>
+<body>
+      <div class="loader"></div>
+       <script>
           setTimeout(function(){
             window.location.href = '/';
           }, 2100);
         </script>
-      </body>
-    </html>`);
+</body>
+</html>`);
   } catch (err) {
     res.status(400).json({
       status: "error",
