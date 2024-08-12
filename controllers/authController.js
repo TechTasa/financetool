@@ -7,17 +7,17 @@ exports.signup = async (req, res) => {
     // Check if a user with the provided username or email already exists
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
-      return res.status(400).json({
-        status: 'error',
-        message: 'Username or email already exists'
+      return res.render('signup', { 
+        error: 'Username or email already exists',
+        formData: req.body
       });
     }
     // Check if a user with the provided phone number already exists
     const existingPhone = await User.findOne({ phone, countryCode });
     if (existingPhone) {
-      return res.status(400).json({
-        status: 'error',
-        message: 'Phone number already exists'
+      return res.render('signup', { 
+        error: 'Phone number already linked to another account',
+        formData: req.body
       });
     }
     // Create a new user
@@ -84,9 +84,9 @@ exports.login = async (req, res) => {
     }
 
     if (!user) {
-      return res.status(404).json({
-        status: 'error',
-        message: 'User not found'
+      return res.render('login', { 
+        error: 'User not found',
+        formData: req.body
       });
     }
     
@@ -98,9 +98,9 @@ exports.login = async (req, res) => {
     
     const isCorrect = await user.checkPassword(password);
     if (!isCorrect) {
-      return res.status(400).json({
-        status: 'error',
-        message: 'Incorrect username/email/phone or password'
+      return res.render('login', { 
+        error: 'Incorrect username/email/phone or password',
+        formData: req.body
       });
     }
     
