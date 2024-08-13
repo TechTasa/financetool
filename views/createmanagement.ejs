@@ -207,6 +207,7 @@
                       : '' %>>Admin</option>
                     <option value="hr" <%=typeof formData !=='undefined' && formData.userType==='hr' ? 'selected' : ''
                       %>>HR</option>
+                        <option value="broker" <%= typeof formData !== 'undefined' && formData.userType === 'broker' ? 'selected' : '' %>>Broker</option>
                     <% } %>
                       <option value="agent" <%=typeof formData !=='undefined' && formData.userType==='agent'
                         ? 'selected' : '' %>>Agent</option>

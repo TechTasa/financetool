@@ -14,7 +14,7 @@ exports.getLeads = async (req, res) => {
     if (userType === 'admin' || userType === 'hr') {
       leads = await Lead.find().populate([
         { path: 'assignedTo', select: 'username' },
-        { path: 'userId', select: 'username' }
+        { path: 'userId', select: 'username userType' }
       ]);
      
     } else if (userType === 'agent' || userType === 'partner') {
@@ -29,18 +29,20 @@ exports.getLeads = async (req, res) => {
         userId: userId
       }).populate([
         { path: 'assignedTo', select: 'username' },
-        { path: 'userId', select: 'username' }
+        { path: 'userId', select: 'username userType' }
       ]);
     }
 
     const agents = await User.find({ userType: 'agent' }, 'id username');
     const partners = await User.find({ userType: 'partner' }, 'id username');
+ 
 
     res.render('leads', {
       leads: leads,
       userType: userType,
       agents: agents,
-      partners: partners
+      partners: partners,
+      referralId: req.session.user.referralId,
     });
   } catch (err) {
     res.status(400).json({

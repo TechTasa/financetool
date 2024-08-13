@@ -58,6 +58,7 @@
 
     input[type="text"],
     input[type="email"],
+    input[type="checkbox"],
     input[type="password"] {
       border: 1px solid #d2d2d7;
       border-radius: 8px;
@@ -70,6 +71,7 @@
 
     input[type="text"]:focus,
     input[type="email"]:focus,
+    input[type="checkbox"]:focus,
     input[type="password"]:focus {
       border-color: #0071e3;
     }
@@ -116,6 +118,62 @@
     .pe_signin_button> * {
       width: 100%;
     }
+    .apple-checkbox-container {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+.apple-checkbox {
+  position: absolute;
+  opacity: 0;
+}
+
+.apple-checkbox-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.checkbox-custom {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #d2d2d7;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.apple-checkbox:checked + .apple-checkbox-label .checkbox-custom {
+  background-color: #0071e3;
+  border-color: #0071e3;
+}
+
+.checkbox-custom::after {
+  content: '\2713';
+  color: white;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.apple-checkbox:checked + .apple-checkbox-label .checkbox-custom::after {
+  opacity: 1;
+}
+
+.label-text {
+  font-size: 17px;
+  color: #1d1d1f;
+}
+
+/* Focus styles for accessibility */
+.apple-checkbox:focus + .apple-checkbox-label .checkbox-custom {
+  box-shadow: 0 0 0 3px rgba(0, 125, 250, 0.6);
+}
   </style>
 </head>
 <body>
@@ -133,9 +191,17 @@
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Password" required>
         <input type="password" name="confirmPassword" placeholder="Confirm Password" required>
-        <input type="hidden" name="userType" value="customer">
+        <input type="hidden" name="userType" id="userTypeInput" value="customer">
         <input type="hidden" name="phone" id="verifiedPhone">
         <input type="hidden" name="countryCode" id="verifiedCountryCode">
+        <input type="text" name="referralId" placeholder="Referral ID (optional)">
+        <div class="apple-checkbox-container">
+          <input type="checkbox" id="brokerCheckbox" name="becomeBroker" class="apple-checkbox">
+          <label for="brokerCheckbox" class="apple-checkbox-label">
+            <span class="checkbox-custom"></span>
+            <span class="label-text">Work with us as a Broker ?</span>
+          </label>
+        </div>
         <div id="phoneVerificationContainer">
           <div class="pe_signin_button" data-client-id="18437036855414457333"></div>
         </div>
@@ -147,6 +213,14 @@
   </div>
   
   <script>
+    document.getElementById('brokerCheckbox').addEventListener('change', function() {
+  var userTypeInput = document.getElementById('userTypeInput');
+  if (this.checked) {
+    userTypeInput.value = 'broker';
+  } else {
+    userTypeInput.value = 'customer';
+  }
+});
     function loadScript() {
       const script = document.createElement('script');
       script.src = 'https://www.phone.email/sign_in_button_v1.js';

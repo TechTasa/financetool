@@ -201,6 +201,7 @@ exports.dashboardOverview = async (req, res) => {
       leadTypeCounts,
       statusCounts,
       userType: req.session.user.userType,
+      referralId: req.session.user.referralId,
       userName: req.session.user.username
     });
   } catch (err) {

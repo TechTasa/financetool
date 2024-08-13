@@ -11,101 +11,113 @@
 <style>
   @import url("https://unpkg.com/@webpixels/css@1.1.5/dist/index.css");
   @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
-  
+
   :root {
-            --primary-color: #007AFF;
-            --secondary-color: #5AC8FA;
-            --background-color: #F2F2F7;
-            --card-background: #FFFFFF;
-            --text-color: #1C1C1E;
-        }
-        body {
-            /* font-family: 'Inter', sans-serif; */
-            background-color: var(--background-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0px;
-        }
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-        .widget {
-            background-color: var(--card-background);
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        .widget-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-        .widget-content {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .big-number {
-            font-size: 36px;
-            font-weight: 300;
-        }
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background-color: #E5E5EA;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .progress-bar-fill {
-            height: 100%;
-            background-color: var(--primary-color);
-        }
-        .mini-chart {
-            width: 100%;
-            height: 60px;
-        }
-        .status-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-        .status-item {
-            text-align: center;
-        }
-        .status-number {
-            font-size: 24px;
-            font-weight: 600;
-        }
-        .status-label {
-            font-size: 12px;
-            color: #8E8E93;
-        }
-        .status-today {
-            font-size: 14px;
-            color: var(--secondary-color);
-            font-weight: 500;
-        }
-        .lead-types-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-        }
+    --primary-color: #007AFF;
+    --secondary-color: #5AC8FA;
+    --background-color: #F2F2F7;
+    --card-background: #FFFFFF;
+    --text-color: #1C1C1E;
+  }
+
+  body {
+    /* font-family: 'Inter', sans-serif; */
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0px;
+  }
+
+  .dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .widget {
+    background-color: var(--card-background);
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .widget-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+
+  .widget-content {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .big-number {
+    font-size: 36px;
+    font-weight: 300;
+  }
+
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: #E5E5EA;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background-color: var(--primary-color);
+  }
+
+  .mini-chart {
+    width: 100%;
+    height: 60px;
+  }
+
+  .status-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .status-item {
+    text-align: center;
+  }
+
+  .status-number {
+    font-size: 24px;
+    font-weight: 600;
+  }
+
+  .status-label {
+    font-size: 12px;
+    color: #8E8E93;
+  }
+
+  .status-today {
+    font-size: 14px;
+    color: var(--secondary-color);
+    font-weight: 500;
+  }
+
+  .lead-types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+  }
 </style>
 
 <body>
   <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
-    <nav
-      class="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg"
-      id="navbarVertical">
+    <nav class="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg" id="navbarVertical">
       <div class="container-fluid">
 
-        <button class="navbar-toggler ms-n2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse"
-          aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler ms-n2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -124,42 +136,65 @@
               </a>
             </li>
             <% if (userType==='admin' || userType==='hr' ) { %>
-              <li class="nav-item">
-                <a class="nav-link" href="/dashboard/management">
-                  <i class="bi bi-people"></i> Management
-                </a>
-              </li>
-              <% } %>
-                <% if (userType==='admin' || userType==='agent' || userType==='partner' || userType==='customer' ) { %>
-                  <li class="nav-item">
-                    <a class="nav-link" href="/dashboard/leads">
-                      <i class="bi bi-bar-chart"></i>
-                      <%= userType==='customer' ? 'My Leads' : 'Leads' %>
-                    </a>
-                  </li>
-                  <% } %>
-                    <% if (userType==='admin' || userType==='hr' ) { %>
-                      <li class="nav-item">
-                        <a class="nav-link" href="/dashboard/jobs">
-                          <i class="bi bi-card-list"></i> Jobs Listing
-                        </a>
-                      </li>
-                      <% } %>
-                        <% if (userType==='admin' || userType==='hr' ) { %>
-                          <li class="nav-item">
-                            <a class="nav-link" href="/dashboard/resume">
-                              <i class="bi bi-file-person"></i> Resumes
-                            </a>
-                          </li>
-                          <% } %>
-                            <% if (userType==='admin' || userType==='blog writer' ) { %>
-                              <li class="nav-item">
-                                <a class="nav-link" href="/dashboard/blog">
-                                  <i class="bi bi-file-text"></i> Blog
-                                </a>
-                              </li>
-                              <% } %>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard/management">
+                <i class="bi bi-people"></i> Management
+              </a>
+            </li>
+            <% } %>
+            <% if (userType==='admin' || userType==='agent' || userType==='partner' || userType==='customer' || userType==='broker' ) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard/leads">
+                <i class="bi bi-bar-chart"></i>
+                <%= userType==='customer' ? 'My Leads' : 'Leads' %>
+              </a>
+            </li>
+            <% } %>
+            <% if (userType==='admin' || userType==='hr' ) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard/jobs">
+                <i class="bi bi-card-list"></i> Jobs Listing
+              </a>
+            </li>
+            <% } %>
+            <% if (userType==='admin' || userType==='hr' ) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard/resume">
+                <i class="bi bi-file-person"></i> Resumes
+              </a>
+            </li>
+            <% } %>
+            <% if (userType==='admin' || userType==='blog writer' ) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="/dashboard/blog">
+                <i class="bi bi-file-text"></i> Blog
+              </a>
+            </li>
+            <% } %>
+            <% if (userType === 'broker' && referralId) { %>
+            <li class="nav-item">
+              <a class="nav-link" href="#" id="referralLink" data-referral-id="<%= referralId %>">
+                <i class="bi bi-link"></i> My Referral ID:<%= referralId %>
+              </a>
+            </li>
+            <% } %>
           </ul>
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              const referralLink = document.getElementById('referralLink');
+              if (referralLink) {
+                referralLink.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  const referralId = this.getAttribute('data-referral-id');
+                  navigator.clipboard.writeText(referralId).then(function() {
+                    alert('Referral ID copied to clipboard!');
+                  }, function(err) {
+                    console.error('Could not copy text: ', err);
+                  });
+                });
+              }
+            });
+          </script>
           <hr class="navbar-divider my-5 opacity-20">
           <div class="mt-auto"></div>
           <ul class="navbar-nav">
@@ -213,50 +248,50 @@
             </div> -->
 
             <% if (userType=="admin" || userType=="agent" ) { %>
-              <!-- here -->
-              <h1>Welcome, <%= userName %></h1>
-    <div class="dashboard">
-        <div class="widget">
-            <div class="widget-title">Total Leads</div>
-            <div class="widget-content">
-                <div class="big-number"><%= totalLeads %></div>
+            <!-- here -->
+            <h1>Welcome, <%= userName %></h1>
+            <div class="dashboard">
+              <div class="widget">
+                <div class="widget-title">Total Leads</div>
+                <div class="widget-content">
+                  <div class="big-number"><%= totalLeads %></div>
+                </div>
+                <div class="widget-title">Today's Leads</div>
+                <div class="progress-bar">
+                  <div class="progress-bar-fill" style="width: <%= (todayLeads / totalLeads) * 100 %>%;"></div>
+                </div>
+                <div class="widget-content">
+                  <div class="big-number"><%= todayLeads %></div>
+                </div>
+              </div>
+
+              <div class="widget">
+                <div class="widget-title">Lead Types Distribution</div>
+                <div class="lead-types-grid">
+                  <% for (let type in leadTypeCounts) { %>
+                  <div class="status-item">
+                    <div class="status-number"><%= leadTypeCounts[type].allTime %></div>
+                    <div class="status-today">Today: <%= leadTypeCounts[type].today %></div>
+                    <div class="status-label"><%= type.charAt(0).toUpperCase() + type.slice(1) %></div>
+                  </div>
+                  <% } %>
+                </div>
+              </div>
+
+              <div class="widget">
+                <div class="widget-title">Lead Status</div>
+                <div class="status-grid">
+                  <% for (let status in statusCounts) { %>
+                  <div class="status-item">
+                    <div class="status-number"><%= statusCounts[status].allTime %></div>
+                    <div class="status-today">Today: <%= statusCounts[status].today %></div>
+                    <div class="status-label"><%= status.charAt(0).toUpperCase() + status.slice(1).replace('_', ' ') %></div>
+                  </div>
+                  <% } %>
+                </div>
+              </div>
             </div>
-            <div class="widget-title">Today's Leads</div>
-            <div class="progress-bar">
-                <div class="progress-bar-fill" style="width: <%= (todayLeads / totalLeads) * 100 %>%;"></div>
-            </div>
-            <div class="widget-content">
-                <div class="big-number"><%= todayLeads %></div>
-            </div>
-        </div>
-        
-        <div class="widget">
-            <div class="widget-title">Lead Types Distribution</div>
-            <div class="lead-types-grid">
-                <% for (let type in leadTypeCounts) { %>
-                    <div class="status-item">
-                        <div class="status-number"><%= leadTypeCounts[type].allTime %></div>
-                        <div class="status-today">Today: <%= leadTypeCounts[type].today %></div>
-                        <div class="status-label"><%= type.charAt(0).toUpperCase() + type.slice(1) %></div>
-                    </div>
-                <% } %>
-            </div>
-        </div>
-        
-        <div class="widget">
-            <div class="widget-title">Lead Status</div>
-            <div class="status-grid">
-                <% for (let status in statusCounts) { %>
-                    <div class="status-item">
-                        <div class="status-number"><%= statusCounts[status].allTime %></div>
-                        <div class="status-today">Today: <%= statusCounts[status].today %></div>
-                        <div class="status-label"><%= status.charAt(0).toUpperCase() + status.slice(1).replace('_', ' ') %></div>
-                    </div>
-                <% } %>
-            </div>
-        </div>
-    </div>
-              <% } %>
+            <% } %>
 
 
       </main>

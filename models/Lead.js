@@ -16,8 +16,8 @@ const LeadSchema = new mongoose.Schema({
     validate: {
       validator: async function (value) {
         const user = await User.findById(value);
-        if (!user || user.userType !== 'customer') {
-          throw new Error('Only customers are allowed');
+        if (!user || user.userType !== 'customer' && user.userType !== 'broker') {
+          throw new Error('Only customers & brokers are allowed');
         }
       },
       message: 'Only customers are allowed'

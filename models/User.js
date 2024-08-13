@@ -18,12 +18,25 @@ const UserSchema = new mongoose.Schema({
   },
   userType: {
     type: String,
-    enum: ['admin', 'agent', 'hr', 'blog writer', 'partner', 'customer'],
+    enum: ['admin', 'agent', 'hr', 'blog writer', 'partner', 'customer', 'broker'],
     required: [true, 'Please provide user type']
   },
   leadAccess: {
     type: Array,
     default: []
+  },
+  referralId: {
+    type: String,
+    unique: true,
+    sparse: true, // This allows the field to be optional
+    referCount: {
+      type: Number,
+      default: 0
+    },
+  },
+  referCount: {
+    type: Number,
+    default: 0
   },
   phone: {
     type: String,
