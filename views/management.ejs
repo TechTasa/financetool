@@ -39,14 +39,14 @@
                 <i class="bi bi-house"></i> Dashboard
               </a>
             </li>
-            <% if (userType === 'admin' || userType === 'hr') { %>
+            <% if (userType === 'admin' || userType === 'hr' || userType === 'broker') { %>
             <li class="nav-item">
               <a class="nav-link" href="/dashboard/management">
-                <i class="bi bi-people"></i> Management
+                <i class="bi bi-people"></i>  <%= userType === 'broker' ? 'My Referred Users' : 'Management' %>
               </a>
             </li>
             <% } %>
-            <% if (userType === 'admin' || userType === 'agent') { %>
+            <% if (userType === 'admin' || userType === 'agent' || userType === 'broker') { %>
             <li class="nav-item">
               <a class="nav-link" href="/dashboard/leads">
                 <i class="bi bi-bar-chart"></i> Leads
@@ -74,7 +74,30 @@
               </a>
             </li>
             <% } %>
+            <% if (userType === 'broker' && referralId) { %>
+              <li class="nav-item">
+                <a class="nav-link" href="#" id="referralLink" data-referral-id="<%= referralId %>">
+                  <i class="bi bi-link"></i> My Referral ID:<%= referralId %>
+                </a>
+              </li>
+              <% } %>
           </ul>
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+              const referralLink = document.getElementById('referralLink');
+              if (referralLink) {
+                referralLink.addEventListener('click', function(e) {
+                  e.preventDefault();
+                  const referralId = this.getAttribute('data-referral-id');
+                  navigator.clipboard.writeText(referralId).then(function() {
+                    alert('Referral ID copied to clipboard!');
+                  }, function(err) {
+                    console.error('Could not copy text: ', err);
+                  });
+                });
+              }
+            });
+          </script>
           <!-- Divider -->
           <hr class="navbar-divider my-5 opacity-20">
           <!-- Navigation -->
@@ -128,22 +151,24 @@
                 <a href="" class="nav-link font-regular" id="partnerBtn">Partner</a>
               </li>
               <% } %>
+              <% if (userType === 'admin' || userType === 'hr') { %>
               <li class="nav-item">
                 <a href="" class="nav-link font-regular" id="agentBtn">Agents</a>
               </li>
+              <% } %>
               <% if (userType === 'admin') { %>
               <li class="nav-item">
                 <a href="" class="nav-link font-regular" id="hrBtn">HR</a>
               </li>
               <% } %>
+              <% if (userType === 'admin' || userType === 'hr') { %>
               <li class="nav-item">
-                <a href="" class="nav-link font-regular" id="writertBtn">Blog Writer</a>
+                <a href="" class="nav-link font-regular" id="writerBtn">Blog Writer</a>
               </li>
-              <% if (userType === 'admin') { %>
+              <% } %>
               <li class="nav-item">
                 <a href="" class="nav-link font-regular" id="customerBtn">Customer</a>
               </li>
-              <% } %>
               <% if (userType === 'admin') { %>
               <li class="nav-item">
                 <a href="" class="nav-link font-regular" id="brokerBtn">Broker</a>
@@ -157,7 +182,7 @@
       <main class="py-6 bg-surface-secondary">
         <div class="container-fluid">
           <div class="table-responsive">
-            <table id="admintable" class="table table-hover table-nowrap">
+            <table style="display: <%= userType === 'admin' ? 'table' : 'none' %>;" id="admintable" class="table table-hover table-nowrap">
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Username</th>
@@ -186,12 +211,13 @@
                 <% }); %>
               </tbody>
             </table>
-            <table style="display: none;" id="customertable" class="table table-hover table-nowrap">
+            <table style="display: <%= userType === 'broker' ? 'table' : 'none' %>;" id="customertable" class="table table-hover table-nowrap">
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Username</th>
                   <th scope="col">Email</th>
                   <th scope="col">Phone</th>
+                  <th scope="col">Refered By</th>
                   <th scope="col">User Type</th>
                   <th colspan="2" scope="col">Actions</th>
 
@@ -203,6 +229,7 @@
                   <td><%= user.username %></td>
                   <td><%= user.email %></td>
                   <td><%= user.phone %></td>
+                  <td><%= user.referrerUsername %></td>
                   <td><%= user.userType %></td>
                   <td>
                     <a href="/dashboard/management/edit/<%= user._id %>" class="btn btn-sm btn-neutral">Edit</a>
@@ -246,7 +273,7 @@
                 <% }); %>
               </tbody>
             </table>
-            <table style="display: none;" id="agenttable" class="table table-hover table-nowrap">
+            <table style="display: <%= userType === 'hr' ? 'table' : 'none' %>;" id="agenttable" class="table table-hover table-nowrap">
               <thead class="thead-light">
                 <tr>
                   <th scope="col">Username</th>
@@ -376,143 +403,35 @@
 </body>
 <script src="/js/navToggle.js"></script>
 <script>
-  if (document.getElementById('adminBtn')) {
-    document.getElementById('adminBtn').addEventListener("click", (e) => {
-      e.preventDefault();
-      document.getElementById('admintable').style.display = "table";
-      document.getElementById('agenttable').style.display = "none";
-      document.getElementById('hrtable').style.display = "none";
-      document.getElementById('writertable').style.display = "none";
-      document.getElementById('adminBtn').classList.add("active");
-      document.getElementById('agentBtn').classList.remove("active");
-      document.getElementById('hrBtn').classList.remove("active");
-      document.getElementById('hrBtn').classList.remove("active");
-      document.getElementById('writertBtn').classList.remove("active");
-      document.getElementById('partnertable').style.display = "none";
-      document.getElementById('partnerBtn').classList.remove("active");
-      document.getElementById('customertable').style.display = "none";
-      document.getElementById('customerBtn').classList.remove("active");
-      document.getElementById('brokertable').style.display = "none";
-      document.getElementById('brokerBtn').classList.remove("active");
-    })
+  document.addEventListener('DOMContentLoaded', function() {
+  const buttons = ['admin', 'customer', 'partner', 'agent', 'hr', 'writer', 'broker'];
+  const tables = buttons.map(b => b + 'table');
+
+  function setupButton(buttonId) {
+    const button = document.getElementById(buttonId + 'Btn');
+    if (button) {
+      button.addEventListener("click", (e) => {
+        e.preventDefault();
+        tables.forEach(tableId => {
+          const table = document.getElementById(tableId);
+          if (table) {
+            table.style.display = (tableId === buttonId + 'table') ? "table" : "none";
+          }
+        });
+        buttons.forEach(btn => {
+          const btnElement = document.getElementById(btn + 'Btn');
+          if (btnElement) {
+            btnElement.classList.toggle("active", btn === buttonId);
+          }
+        });
+      });
+    }
   }
 
-  if (document.getElementById('customerBtn')) {
-    document.getElementById('customerBtn').addEventListener("click", (e) => {
-      e.preventDefault();
-      document.getElementById('admintable').style.display = "none";
-      document.getElementById('agenttable').style.display = "none";
-      document.getElementById('hrtable').style.display = "none";
-      document.getElementById('writertable').style.display = "none";
-      document.getElementById('adminBtn').classList.remove("active");
-      document.getElementById('agentBtn').classList.remove("active");
-      document.getElementById('hrBtn').classList.remove("active");
-      document.getElementById('hrBtn').classList.remove("active");
-      document.getElementById('writertBtn').classList.remove("active");
-      document.getElementById('partnertable').style.display = "none";
-      document.getElementById('partnerBtn').classList.remove("active");
-      document.getElementById('customertable').style.display = "table";
-      document.getElementById('customerBtn').classList.add("active");
-      document.getElementById('brokertable').style.display = "none";
-      document.getElementById('brokerBtn').classList.remove("active");
-    })
-  }
-
-  if (document.getElementById('partnerBtn')) {
-    document.getElementById('partnerBtn').addEventListener("click", (e) => {
-      e.preventDefault();
-      document.getElementById('partnertable').style.display = "table";
-      document.getElementById('admintable').style.display = "none";
-      document.getElementById('agenttable').style.display = "none";
-      document.getElementById('hrtable').style.display = "none";
-      document.getElementById('writertable').style.display = "none";
-      document.getElementById('adminBtn').classList.remove("active");
-      document.getElementById('agentBtn').classList.remove("active");
-      document.getElementById('hrBtn').classList.remove("active");
-      document.getElementById('hrBtn').classList.remove("active");
-      document.getElementById('writertBtn').classList.remove("active");
-      document.getElementById('partnerBtn').classList.add("active");
-      document.getElementById('customertable').style.display = "none";
-      document.getElementById('customerBtn').classList.remove("active");
-      document.getElementById('brokertable').style.display = "none";
-      document.getElementById('brokerBtn').classList.remove("active");
-    })
-  }
-  document.getElementById('agentBtn').addEventListener("click", (e) => {
-    e.preventDefault();
-    document.getElementById('admintable').style.display = "none";
-    document.getElementById('agenttable').style.display = "table";
-    document.getElementById('hrtable').style.display = "none";
-    document.getElementById('writertable').style.display = "none";
-    document.getElementById('agentBtn').classList.add("active");
-    document.getElementById('adminBtn').classList.remove("active");
-    document.getElementById('hrBtn').classList.remove("active");
-    document.getElementById('writertBtn').classList.remove("active");
-    document.getElementById('partnertable').style.display = "none";
-    document.getElementById('partnerBtn').classList.remove("active");
-    document.getElementById('customertable').style.display = "none";
-    document.getElementById('customerBtn').classList.remove("active");
-    document.getElementById('brokertable').style.display = "none";
-      document.getElementById('brokerBtn').classList.remove("active");
-  })
-  if (document.getElementById('hrBtn')) {
-    document.getElementById('hrBtn').addEventListener("click", (e) => {
-      e.preventDefault();
-      document.getElementById('admintable').style.display = "none";
-      document.getElementById('agenttable').style.display = "none";
-      document.getElementById('hrtable').style.display = "table";
-      document.getElementById('writertable').style.display = "none";
-      document.getElementById('hrBtn').classList.add("active");
-      document.getElementById('adminBtn').classList.remove("active");
-      document.getElementById('agentBtn').classList.remove("active");
-      document.getElementById('writertBtn').classList.remove("active");
-      document.getElementById('partnertable').style.display = "none";
-      document.getElementById('partnerBtn').classList.remove("active");
-      document.getElementById('customertable').style.display = "none";
-      document.getElementById('customerBtn').classList.remove("active");
-      document.getElementById('brokertable').style.display = "none";
-      document.getElementById('brokerBtn').classList.remove("active");
-    })
-  }
-  if (document.getElementById('writertBtn')) {
-    document.getElementById('writertBtn').addEventListener("click", (e) => {
-      e.preventDefault();
-      document.getElementById('admintable').style.display = "none";
-      document.getElementById('agenttable').style.display = "none";
-      document.getElementById('hrtable').style.display = "none";
-      document.getElementById('writertable').style.display = "table";
-      document.getElementById('writertBtn').classList.add("active");
-      document.getElementById('adminBtn').classList.remove("active");
-      document.getElementById('agentBtn').classList.remove("active");
-      document.getElementById('hrBtn').classList.remove("active");
-      document.getElementById('partnertable').style.display = "none";
-      document.getElementById('partnerBtn').classList.remove("active");
-      document.getElementById('customertable').style.display = "none";
-      document.getElementById('customerBtn').classList.remove("active");
-      document.getElementById('brokertable').style.display = "none";
-      document.getElementById('brokerBtn').classList.remove("active");
-    })
-  }
-  if (document.getElementById('brokerBtn')) {
-    document.getElementById('brokerBtn').addEventListener("click", (e) => {
-      e.preventDefault();
-      document.getElementById('admintable').style.display = "none";
-      document.getElementById('agenttable').style.display = "none";
-      document.getElementById('hrtable').style.display = "none";
-      document.getElementById('writertable').style.display = "none";
-      document.getElementById('partnertable').style.display = "none";
-      document.getElementById('customertable').style.display = "none";
-      document.getElementById('brokertable').style.display = "table";
-      document.getElementById('brokerBtn').classList.add("active");
-
-      document.getElementById('adminBtn').classList.remove("active");
-      document.getElementById('agentBtn').classList.remove("active");
-      document.getElementById('hrBtn').classList.remove("active");
-      document.getElementById('writertBtn').classList.remove("active");
-      document.getElementById('partnerBtn').classList.remove("active");
-      document.getElementById('customerBtn').classList.remove("active");
-    })
-  }
+  buttons.forEach(setupButton);
+});
 </script>
+
+
 
 </html>

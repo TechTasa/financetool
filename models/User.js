@@ -38,6 +38,14 @@ const UserSchema = new mongoose.Schema({
     type: Number,
     default: 0
   },
+  referredBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  referredUsers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }],
   phone: {
     type: String,
     required: [true, 'Please provide phone number']

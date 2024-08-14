@@ -92,9 +92,31 @@ exports.getUsers = async (req, res) => {
     if (req.session.user.userType === "agent") {
       return res.status(403).send("Unauthorized");
     }
-    const users = await User.find();
+    let users;
+    if (req.session.user.userType === "broker") {
+      // If the user is a broker, only fetch users referred by them
+      users = await User.find({ referredBy: req.session.user._id });
+    } else {
+      // For other user types (like admin), fetch all users
+      users = await User.find();
+    }
+
+    // Fetch referring users' information
+    const usersWithReferrer = await Promise.all(users.map(async (user) => {
+      if (user.referredBy) {
+        const referrer = await User.findById(user.referredBy);
+        return {
+          ...user.toObject(),
+          referrerUsername: referrer ? referrer.username : 'Unknown'
+        };
+      }
+      return user.toObject();
+    }));
+
     const userType = req.session.user.userType;
-    res.render("management", { users: users, userType });
+    
+    
+     res.render("management", { users: usersWithReferrer, userType , referralId: req.session.user.referralId, });
   } catch (err) {
     res.status(400).json({
       status: "error",

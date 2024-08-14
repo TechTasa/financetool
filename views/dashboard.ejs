@@ -135,10 +135,10 @@
                 <i class="bi bi-house"></i> Dashboard
               </a>
             </li>
-            <% if (userType==='admin' || userType==='hr' ) { %>
+            <% if (userType==='admin' || userType==='hr' || userType==='broker') { %>
             <li class="nav-item">
               <a class="nav-link" href="/dashboard/management">
-                <i class="bi bi-people"></i> Management
+                <i class="bi bi-people"></i>  <%= userType === 'broker' ? 'My Referred Users' : 'Management' %>
               </a>
             </li>
             <% } %>
@@ -223,29 +223,6 @@
       <main class="py-6 bg-surface-secondary">
         <div class="container-fluid">
           <div class="row g-6 mb-6">
-            <!-- <div class="col-xl-3 col-sm-6 col-12">
-              <div class="card shadow border-0">
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col">
-                      <span class="h6 font-semibold text-muted text-sm d-block mb-2">Welcome</span>
-                      <span class="h3 font-bold mb-0">
-                        <%= userName %>
-                      </span>
-                    </div>
-                    <div class="col-auto">
-
-                    </div>
-                  </div>
-                  <div class="mt-2 mb-0 text-sm">
-                    <span class=" me-2">
-
-                    </span>
-
-                  </div>
-                </div>
-              </div>
-            </div> -->
 
             <% if (userType=="admin" || userType=="agent" ) { %>
             <!-- here -->
