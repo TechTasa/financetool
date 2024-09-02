@@ -128,6 +128,7 @@
                 <h1 class="h2 mb-0 ls-tight">Management</h1>
               </div>
               <!-- Actions -->
+              <% if (userType === 'admin') { %>
               <div class="col-sm-6 col-12 text-sm-end">
                 <div class="mx-n1">
                   <a href="/dashboard/management/create" class="btn d-inline-flex btn-sm btn-primary mx-1">
@@ -138,6 +139,7 @@
                   </a>
                 </div>
               </div>
+              <% } %>
             </div>
             <!-- Nav -->
             <ul class="nav nav-tabs mt-4 overflow-x border-0">
