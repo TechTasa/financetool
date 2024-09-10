@@ -10,6 +10,7 @@ exports.getLeads = async (req, res) => {
 
     res.render("leadsDashboard", {
       userType: userType,
+      referralId: req.session.user.referralId,
     });
   } catch (err) {
     res.status(400).json({
