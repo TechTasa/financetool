@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Finance Tool</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/services.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+</head>
+<style>
+  /* Combined CSS */
+  body {
+          font-family: 'Arial', sans-serif;
+          margin: 0;
+          padding: 0;
+          background: #f0f4f8;
+          color: black;
+      }
+
+      header {
+        background: linear-gradient(to left, #0561CA, #00278C);
+          color: #fff;
+          padding: 1.5em 2em;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+          position: sticky;
+          top: 0;
+          z-index: 1000;
+      }
+
+      header h1 {
+          margin: 0;
+          font-size: 2.4em;
+          letter-spacing: 1px;
+      }
+
+      .container {
+          padding: 2em;
+      }
+
+      section {
+          margin-bottom: 2em;
+          background: #fff;
+          border-radius: 12px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+          padding: 2em;
+      }
+
+      h2 {
+          color: #00278C;
+          font-size: 2em;
+          margin-bottom: 1em;
+          position: relative;
+      }
+
+      h2::after {
+          content: '';
+          display: block;
+          width: 50px;
+          height: 5px;
+          background: #00278C;
+          position: absolute;
+          bottom: -10px;
+          left: 0;
+      }
+
+      .card-types {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 1em;
+          justify-content: center;
+      }
+
+      .card-type {
+          flex: 1 1 calc(33.333% - 1em); /* For three cards in the first row */
+          background: #f9f9f9;
+          border-radius: 8px;
+          padding: 1.5em;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          transition: box-shadow 0.3s;
+          box-sizing: border-box;
+      }
+
+      .card-type:nth-child(4), .card-type:nth-child(5) {
+          flex: 1 1 calc(50% - 1em); /* For two centered cards in the second row */
+      }
+
+      .card-type:hover {
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .card-type h3 {
+          margin-top: 0;
+          color: #00278C;
+      }
+
+      .faq-section {
+          display: flex;
+          flex-direction: column;
+          gap: 1em;
+      }
+
+      .faq-item {
+          background: #f9f9f9;
+          border-radius: 8px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+          transition: box-shadow 0.3s;
+      }
+
+      .faq-item:hover {
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .faq-question {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1em;
+          cursor: pointer;
+          position: relative;
+          background: #fff;
+          font-weight: bold;
+      }
+
+      .faq-question::after {
+          content: '\002B'; /* Unicode for plus sign */
+          font-size: 1.5em;
+          color: #00278C;
+          margin-left: 1em;
+          transition: transform 0.3s;
+      }
+
+      .faq-question.active::after {
+          content: '\2212'; /* Unicode for minus sign */
+          color: #00278C;
+      }
+
+      .faq-answer {
+          display: none;
+          padding: 1em;
+          background: #f4f4f4;
+      }
+
+      .faq-answer.show {
+          display: block;
+      }
+
+      /* Media Queries for Responsiveness */
+      @media (max-width: 1200px) {
+          .card-type {
+              flex: 1 1 calc(50% - 1em); /* Two cards per row */
+          }
+
+          .card-type:nth-child(4), .card-type:nth-child(5) {
+              flex: 1 1 calc(100% - 1em); /* Full-width for the last two cards */
+          }
+      }
+
+      @media (max-width: 768px) {
+          header h1 {
+              font-size: 1.8em;
+          }
+
+          section {
+              padding: 1.5em;
+          }
+
+          .container {
+              padding: 1.5em;
+          }
+
+          .card-type {
+              flex: 1 1 calc(100% - 1em); /* Full-width cards */
+          }
+
+          h2 {
+              font-size: 1.6em;
+          }
+
+      }
+
+      @media (max-width: 480px) {
+          header h1 {
+              font-size: 1.5em;
+          }
+
+          .faq-question {
+              font-size: 1.2em;
+          }
+
+          .faq-answer {
+              font-size: 0.9em;
+          }
+
+          h2 {
+              font-size: 1.4em;
+          }
+      }
+      #selection ul{
+         line-height: 2rem;
+      }
+      #benefits ul{
+         line-height: 2rem;
+      }
+      #apply ol{
+         line-height: 2rem;
+      }
+      #apply p {
+         color: black;
+      }
+      .card-type p{
+        color: black;
+      }
+      .services1 h1{
+        text-align: center;
+        font-weight: 800;
+        margin-bottom: 2rem;
+      }
+      .icons a {
+      margin: 8px;
+      font-size: 20px;
+      color: white;
+}
+</style>
+<body>
+  <nav class="navbar">
+    <div id="menu"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="44"
+        height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#1b1dc7" fill="none" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+        <line x1="4" y1="6" x2="20" y2="6" />
+        <line x1="4" y1="12" x2="20" y2="12" />
+        <line x1="4" y1="18" x2="20" y2="18" />
+      </svg></div>
+    <a href="/" class="logo"><img src="../images/XpertRupees_Logo.svg" alt=""></a>
+    <ul class="links">
+      <li class=" link "><a href="/">Home</a></li>
+      <li class=" link active"><a href="/services">Services</a></li>
+      <li class=" link "><a href="/career">Career</a></li>
+      <li class=" link "><a href="/blog">Blog</a></li>
+      <li class=" link"><a href="/contact">Contact</a></li>
+    </ul>
+    <% if (loggedin) { %>
+      <button class="cta" onClick='location="/dashboard"'>Dashboard</button>
+      <% } else { %>
+        <button class="cta" onClick='location="/auth/login"'>Sign In</button>
+        <% } %>
+  </nav>
+  <h1 style="text-align: center; font-weight: 800; margin-bottom: 5rem; margin-top: 2rem;">Product Loan</h1>
+
+  <section id="apply" class="container">
+    <h2>Product Loan Services</h2>
+    <p>A product loan provides financing for the purchase of specific products, such as electronics, appliances, or other consumer goods. These loans are designed to help you acquire high-value items without having to make a large upfront payment. With flexible terms and competitive interest rates, product loans make it easier to get the products you need or want.</p>
+  </section>
+  
+  <section id="selection" class="container">
+    <h2>Why Choose Our Product Loans?</h2>
+    <ul>
+      <li><strong>Competitive Interest Rates:</strong> Enjoy attractive interest rates that make your monthly payments more manageable.</li>
+      <li><strong>Flexible Loan Terms:</strong> Choose from a variety of repayment terms that suit your budget and financial situation.</li>
+      <li><strong>Easy Application Process:</strong> Our application process is straightforward and designed to be completed quickly and efficiently.</li>
+      <li><strong>Minimal Documentation:</strong> Apply with minimal paperwork, making the process simpler and faster for you.</li>
+      <li><strong>Quick Disbursement:</strong> Once approved, the loan amount is disbursed quickly, allowing you to purchase your product without delay.</li>
+    </ul>
+  </section>
+  
+  <section id="benefits" class="container">
+    <h2>Types of Product Loans We Offer</h2>
+    <ul>
+      <li><strong>Electronics Loans:</strong> Finance the purchase of electronic items such as smartphones, laptops, or televisions. Get the latest technology without a large upfront cost.</li>
+      <li><strong>Appliance Loans:</strong> Obtain funding for home appliances like refrigerators, washing machines, or air conditioners. Upgrade your home with the essential appliances you need.</li>
+      <li><strong>Furniture Loans:</strong> Secure a loan to purchase new furniture for your home or office. Enhance your living or working space with stylish and functional furniture.</li>
+      <li><strong>Consumer Goods Loans:</strong> Finance other consumer goods such as kitchen gadgets, fitness equipment, or luxury items. Enjoy your desired products with flexible repayment options.</li>
+      <li><strong>Vehicle Loans:</strong> Obtain funding for smaller vehicles or accessories. Whether it's a scooter, motorcycle, or car accessories, we have options available.</li>
+    </ul>
+  </section>
+  
+  <section id="types" class="container">
+    <h2>How to Apply for a Product Loan</h2>
+    <p>Applying for a product loan with us is easy and straightforward:</p>
+    <div class="card-types">
+      <div class="card-type">
+        <h3>Select Your Product Loan</h3>
+        <p>Choose the type of product loan that fits your needs, whether it's for electronics, appliances, furniture, or other consumer goods.</p>
+      </div>
+      <div class="card-type">
+        <h3>Check Eligibility</h3>
+        <p>Review the eligibility criteria to ensure you meet the requirements for the loan you are interested in.</p>
+      </div>
+      <div class="card-type">
+        <h3>Submit Application</h3>
+        <p>Complete the online application form with your details and any required documentation. Provide necessary identification and proof of purchase.</p>
+      </div>
+      <div class="card-type">
+        <h3>Verification Process</h3>
+        <p>Our team will review your application and documents, typically taking 3-5 working days for verification.</p>
+      </div>
+      <div class="card-type">
+        <h3>Approval and Disbursement</h3>
+        <p>Once approved, the loan amount will be disbursed to your account or directly to the vendor within 5-7 working days. Use the funds to purchase your product as needed.</p>
+      </div>
+    </div>
+  </section>
+  
+  <section id="final" class="container">
+    <h2>Get the Product Loan That Meets Your Needs</h2>
+    <p>Our product loan offerings are designed to provide flexible and affordable financing for various consumer goods. Whether you need electronics, appliances, furniture, or other items, we have the right loan to help you make your purchase.</p>
+  </section>
+  
+  <div class="footer">
+    <div class="footer-content">
+      <img src="../images/XpertRupees_Logo_White.svg" alt="">
+      <ul>
+        <li class=" footer-link"><a href="/">Home</a></li>
+        <li class=" footer-link"><a href="/services">Services</a></li>
+        <li class=" footer-link"><a href="/career">Career</a></li>
+        <li class=" footer-link"><a href="/blog">Blog</a></li>
+        <li class=" footer-link"><a href="/contact">Contact</a></li>
+      </ul>
+      <div class="icons">
+        <a href="https://www.facebook.com/rupeexpert/?ref=pages_you_manage"><svg xmlns="http://www.w3.org/2000/svg"
+            class="icon icon-tabler icon-tabler-brand-facebook" width="44" height="44" viewBox="0 0 24 24"
+            stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+          </svg></a>
+        <a href=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram"
+            width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <rect x="4" y="4" width="16" height="16" rx="4" />
+            <circle cx="12" cy="12" r="3" />
+            <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
+          </svg></a>
+        <a href="https://www.linkedin.com/company/rupeexpert/?viewAsMember=true"><svg xmlns="http://www.w3.org/2000/svg"
+            class="icon icon-tabler icon-tabler-brand-linkedin" width="44" height="44" viewBox="0 0 24 24"
+            stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <rect x="4" y="4" width="16" height="16" rx="2" />
+            <line x1="8" y1="11" x2="8" y2="16" />
+            <line x1="8" y1="8" x2="8" y2="8.01" />
+            <line x1="12" y1="16" x2="12" y2="11" />
+            <path d="M16 16v-3a2 2 0 0 0 -4 0" />
+          </svg></a>
+        <a href=""><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="44"
+            height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round"
+            stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path
+              d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
+          </svg></a>
+      </div>
+    </div>
+    <div class="footer-map">
+      <div class="mapouter">
+        <div class="gmap_canvas"><iframe class="gmap_iframe" width="100%" frameborder="0" scrolling="no"
+            marginheight="0" marginwidth="0"
+            src="https://maps.google.com/maps?width=700&amp;height=400&amp;hl=en&amp;q=Sohrab Hall&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
+        </div>
+        <style>
+          .mapouter {
+            position: relative;
+            text-align: right;
+            width: 100%;
+            height: 400px;
+          }
+
+          .gmap_canvas {
+            overflow: hidden;
+            background: none !important;
+            width: 100%;
+            height: 400px;
+          }
+
+          .gmap_iframe {
+            height: 400px !important;
+          }
+        </style>
+      </div>
+    </div>
+  </div>
+  <style>
+    .footer2 {
+      display: flex;
+      height: auto;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: #000000;
+      color: #fff;
+      padding: 10px;
+    }
+
+    .footer2 a {
+      color: #fff;
+      text-decoration: none;
+    }
+  </style>
+  <div class="footer2">
+    <small>&copy; Copyright 2024</small>
+    <small> Developed By <a href="https://www.techtasa.com/">Techtasa</a></small>
+  </div>
+</body>
+<script src="../js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+
+</html>

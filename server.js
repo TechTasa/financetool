@@ -111,6 +111,31 @@ app.use((req, res, next) => {
     res.render("homeloan",{loggedin})
     // res.sendFile(path.join(__dirname, 'public','html', 'services.html'));
   })
+  app.get('/services/auto', (req, res) => {
+    const loggedin=req.session.user;
+    res.render("auto",{loggedin})
+    
+  })
+  app.get('/services/education', (req, res) => {
+    const loggedin=req.session.user;
+    res.render("education",{loggedin})
+    
+  })
+  app.get('/services/loanagainst', (req, res) => {
+    const loggedin=req.session.user;
+    res.render("loanagainst",{loggedin})
+    
+  })
+  app.get('/services/product', (req, res) => {
+    const loggedin=req.session.user;
+    res.render("product",{loggedin})
+    
+  })
+  app.get('/services/serviceloan', (req, res) => {
+    const loggedin=req.session.user;
+    res.render("serviceloan",{loggedin})
+    
+  })
   app.get('/contact', (req, res) => {
     const loggedin=req.session.user;
     res.render("contact",{loggedin})
