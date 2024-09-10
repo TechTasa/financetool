@@ -8,10 +8,12 @@
    <title>Finance Tool</title>
   <link rel="stylesheet" href="../css/style.css">
   <link rel="stylesheet" href="../css/services.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 </head>
 <style>
+<<<<<<< HEAD
   /* Combined CSS */
   body {
           font-family: 'Arial', sans-serif;
@@ -224,6 +226,220 @@
       margin: 8px;
       font-size: 20px;
       color: white;
+=======
+    /* Combined CSS */
+    body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f4f8;
+            color: black;
+        }
+
+        header {
+          background: linear-gradient(to left, #0561CA, #00278C);
+            color: #fff;
+            padding: 1.5em 2em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.4em;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            padding: 2em;
+        }
+
+        section {
+            margin-bottom: 2em;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 2em;
+        }
+
+        h2 {
+            color: #00278C;
+            font-size: 2em;
+            margin-bottom: 1em;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 5px;
+            background: #00278C;
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+        }
+
+        .card-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1em;
+            justify-content: center;
+        }
+
+        .card-type {
+            flex: 1 1 calc(33.333% - 1em); /* For three cards in the first row */
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 1.5em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s;
+            box-sizing: border-box;
+        }
+
+        .card-type:nth-child(4), .card-type:nth-child(5) {
+            flex: 1 1 calc(50% - 1em); /* For two centered cards in the second row */
+        }
+
+        .card-type:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-type h3 {
+            margin-top: 0;
+            color: #00278C;
+        }
+
+        .faq-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1em;
+        }
+
+        .faq-item {
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1em;
+            cursor: pointer;
+            position: relative;
+            background: #fff;
+            font-weight: bold;
+        }
+
+        .faq-question::after {
+            content: '\002B'; /* Unicode for plus sign */
+            font-size: 1.5em;
+            color: #00278C;
+            margin-left: 1em;
+            transition: transform 0.3s;
+        }
+
+        .faq-question.active::after {
+            content: '\2212'; /* Unicode for minus sign */
+            color: #00278C;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 1em;
+            background: #f4f4f4;
+        }
+
+        .faq-answer.show {
+            display: block;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 1200px) {
+            .card-type {
+                flex: 1 1 calc(50% - 1em); /* Two cards per row */
+            }
+
+            .card-type:nth-child(4), .card-type:nth-child(5) {
+                flex: 1 1 calc(100% - 1em); /* Full-width for the last two cards */
+            }
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            section {
+                padding: 1.5em;
+            }
+
+            .container {
+                padding: 1.5em;
+            }
+
+            .card-type {
+                flex: 1 1 calc(100% - 1em); /* Full-width cards */
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            .faq-question {
+                font-size: 1.2em;
+            }
+
+            .faq-answer {
+                font-size: 0.9em;
+            }
+
+            h2 {
+                font-size: 1.4em;
+            }
+        }
+        #selection ul{
+           line-height: 2rem;
+        }
+        #benefits ul{
+           line-height: 2rem;
+        }
+        #apply ol{
+           line-height: 2rem;
+        }
+        #apply p {
+           color: black;
+        }
+        .card-type p{
+          color: black;
+        }
+        .services1 h1{
+          text-align: center;
+          font-weight: 800;
+          margin-bottom: 2rem;
+        }
+        .icons a {
+        margin: 8px;
+        font-size: 20px;
+        color: white;
+>>>>>>> 7869170c2338c650dad5bc340c5ad072affb2ab2
 }
 </style>
 <body>
@@ -250,6 +466,7 @@
         <button class="cta" onClick='location="/auth/login"'>Sign In</button>
         <% } %>
   </nav>
+<<<<<<< HEAD
   <h1 style="text-align: center; font-weight: 800; margin-bottom: 5rem; margin-top: 2rem;">Micro Loan</h1>
   <section id="apply" class="container">
     <h2>Micro Loan Services</h2>
@@ -308,6 +525,66 @@
 <section id="final" class="container">
     <h2>Get the Micro Loan That Meets Your Needs</h2>
     <p>Our micro loan offerings are designed to provide accessible and flexible funding for various small-scale needs. Whether you're managing personal expenses, funding a small business, or making home improvements, we have the right micro loan for you.</p>
+=======
+  <h1 style="text-align: center; font-weight: 800; margin-bottom: 5rem; margin-top: 2rem;">Micro Loans</h1>
+  <section id="apply" class="container">
+    <h2>Micro Loans Services</h2>
+    <p>Micro loans provide small-scale, short-term financing for individuals or businesses needing quick access to funds. These loans are ideal for covering minor expenses, managing cash flow, or addressing immediate financial needs with minimal borrowing amounts.</p>
+</section>
+  <section id="selection" class="container">
+    <h2>Why Choose Our Micro Loans?</h2>
+    <ul>
+        <li><strong>Flexible Options: </strong> We partner with various financial institutions to offer a range of micro loan options suited to your specific needs. Whether it's for personal use or small business purposes, we have the right loan for you.</li>
+        <li><strong>Affordable Rates:</strong> Benefit from competitive interest rates designed to keep your borrowing costs low. This makes your payments more manageable and reduces the total interest paid.</li>
+        <li><strong>Simple Application:</strong> Our application process is streamlined with minimal documentation, allowing you to access funds quickly and efficiently.</li>
+        <li><strong>Convenient Repayment:</strong> Choose from flexible repayment terms that fit your financial situation, making it easier to manage your loan payments.</li>
+        <li><strong>Tax Benefits:</strong> Enjoy tax deductions on the principal and interest components of your home loan, making homeownership more affordable.</li>
+        <li><strong>24/7 Support:</strong> Our customer service team is available around the clock to assist with any questions or issues related to your micro loan, ensuring a smooth experience.</li>
+    </ul>
+</section>
+
+<section id="benefits" class="container">
+    <h2>Types of Micro Loans We Offer</h2>
+    <ul>
+        <li><strong>Personal Micro Loans:</strong> Access small amounts of funding for personal expenses, emergencies, or unexpected needs. Quick approval and disbursement help you address your immediate financial requirements.</li>
+        <li><strong>Micro Business Loans:</strong> Obtain small-scale financing to manage minor business expenses, purchase inventory, or handle short-term cash flow issues.</li>
+        <li><strong>Micro Equipment Loans:</strong> Finance the purchase of essential equipment with manageable payments over time, supporting your operational needs without large upfront costs.</li>
+        <li><strong>Micro Lines of Credit:</strong>Secure a small credit line to draw from as needed. Pay interest only on the amount used, providing flexibility for managing short-term expenses.</li>
+        <!-- <li><strong>Balance Transfer Home Loans:</strong> Transfer your existing home loan to us for better interest rates and terms. Save on interest costs and enjoy improved loan features.</li> -->
+        <!-- <li><strong>Fraud Protection:</strong> Stay protected with advanced security features that monitor and prevent unauthorized transactions.</li> -->
+    </ul>
+</section>
+
+<section id="types" class="container">
+    <h2>How to Apply for a Home Loan</h2>
+    <p>Applying for a home loan with us is simple:</p>
+    <div class="card-types">
+        <div class="card-type">
+            <h3>Choose Your Loan</h3>
+            <p>Review our micro loan options and select the one that best suits your needs.</p>
+        </div>
+        <div class="card-type">
+            <h3>Check Eligibility</h3>
+            <p>Ensure you meet the basic eligibility criteria for the micro loan, including any required income or credit score standards.</p>
+        </div>
+        <div class="card-type">
+            <h3>Complete Application</h3>
+            <p>Fill out the online application form with your personal or business details and provide minimal required documents.</p>
+        </div>
+        <div class="card-type">
+            <h3>Quick Verification</h3>
+            <p>Our team will verify your application promptly, typically within 1-2 working days.</p>
+        </div>
+        <div class="card-type">
+            <h3>Approval and Disbursement</h3>
+            <p>Once approved, the loan amount will be disbursed to your account within 3-5 working days, ready for your use.</p>
+        </div>
+    </div>
+</section>
+<section id="apply" class="container">
+  <h2>Get Started with Your Micro Loan</h2>
+  <p>Our network of financial partners ensures you have access to the best micro loan options tailored to your needs. Whether for personal or business purposes, we have a solution that fits.</p>
+>>>>>>> 7869170c2338c650dad5bc340c5ad072affb2ab2
 </section>
   <div class="footer">
     <div class="footer-content">
@@ -320,6 +597,7 @@
         <li class=" footer-link"><a href="/contact">Contact</a></li>
       </ul>
       <div class="icons">
+<<<<<<< HEAD
         <a href="https://www.facebook.com/rupeexpert/?ref=pages_you_manage"><svg xmlns="http://www.w3.org/2000/svg"
             class="icon icon-tabler icon-tabler-brand-facebook" width="44" height="44" viewBox="0 0 24 24"
             stroke-width="1.5" stroke="#ffffff" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -351,6 +629,20 @@
             <path
               d="M22 4.01c-1 .49 -1.98 .689 -3 .99c-1.121 -1.265 -2.783 -1.335 -4.38 -.737s-2.643 2.06 -2.62 3.737v1c-3.245 .083 -6.135 -1.395 -8 -4c0 0 -4.182 7.433 4 11c-1.872 1.247 -3.739 2.088 -6 2c3.308 1.803 6.913 2.423 10.034 1.517c3.58 -1.04 6.522 -3.723 7.651 -7.742a13.84 13.84 0 0 0 .497 -3.753c-.002 -.249 1.51 -2.772 1.818 -4.013z" />
           </svg></a>
+=======
+        <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="#"><i class="fa-brands fa-github"></i></a>
+            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+      </div>
+      <div class="icons">
+        <a href="#"><i class="fa-brands fa-instagram"></i></a> <!-- Instagram -->
+        <a href="#"><i class="fa-brands fa-pinterest"></i></a> <!-- Pinterest -->
+        <a href="#"><i class="fa-brands fa-whatsapp"></i></a> <!-- WhatsApp -->
+        <a href="#"><i class="fa-brands fa-tumblr"></i></a> <!-- Tumblr -->
+        <a href="#"><i class="fa-brands fa-telegram"></i></a> <!-- Telegram -->
+>>>>>>> 7869170c2338c650dad5bc340c5ad072affb2ab2
       </div>
     </div>
     <div class="footer-map">
@@ -399,7 +691,11 @@
     }
   </style>
   <div class="footer2">
+<<<<<<< HEAD
     <small>&copy; Copyright 2024</small>
+=======
+    <small>&copy; Copyright 2024, Ocean One Pvt. Ltd</small>
+>>>>>>> 7869170c2338c650dad5bc340c5ad072affb2ab2
     <small> Developed By <a href="https://www.techtasa.com/">Techtasa</a></small>
   </div>
 </body>

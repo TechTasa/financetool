@@ -938,8 +938,13 @@ body {
 
 .footer-link:hover a {
   text-decoration: underline;
+  color: white;
 }
-
+.icons a {
+  margin: 8px;
+  font-size: 20px;
+  color: white;
+}
 .icons {
   display: flex;
   justify-content: space-around;
