@@ -408,7 +408,7 @@
             <option value="email">Email</option>
           </select>
         </div>
-        <% if (type=="personalloan" || type=="creditcard" || type=="microloan" || type=="homeloan" ) { %>
+        <% if (type != "businessloan") { %>
         <div class="dropdown">
           <button class="dropdownbtn" onclick="toggleDropdown(event)">Upload Documents(Optional)</button>
           <div id="dropdown-content">
@@ -438,8 +438,7 @@
             </div>
           </div>
         </div>
-        <% } %>
-        <% if (type=="businessloan" ) { %>
+<% } else { %>
         <div class="dropdown">
           <button class="dropdownbtn" onclick="toggleDropdown(event)">Upload Documents(Optional)</button>
           <div id="dropdown-content">
@@ -461,7 +460,7 @@
             </div>
           </div>
         </div>
-        <% } %>
+<% } %>
 
       </div>
 
